@@ -271,6 +271,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tree_stories.itemSelectionChanged.connect(self.story_selected)
         self.tree_stories_official.itemSelectionChanged.connect(self.story_selected)
         self.tree_stories_third_party.itemSelectionChanged.connect(self.story_selected)
+        self.splitter.splitterMoved.connect(self.story_selected)
 
         self.local_db_choose_folder_button.clicked.connect(self.ts_open_local_folder)
         self.local_db_line_edit.editingFinished.connect(self.ts_open_local_folder_changed)
@@ -577,7 +578,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     subtitle = stories.DB_OFFICIAL[uuid]["localized_infos"][locale].get("subtitle", "")
                     url = os.path.join(CACHE_DIR, uuid)
                     self.story_details.setHtml(
-                        "<img src=\"" + url + "\"/><br>"
+                        "<img src=\"" + url + "\" width=\"" + str(self.story_details.width()) + "\" /><br>"
                         + "<h2>" + title + "</h2>"
                         + "<h3>" + subtitle + "</h3>" 
                         + description)
@@ -586,7 +587,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     title = stories.DB_THIRD_PARTY[uuid].get("title")
                     url = os.path.join(CACHE_DIR, uuid)
                     self.story_details.setHtml(
-                        "<img src=\"" + url + "\"/><br>"
+                        "<img src=\"" + url + "\" width=\"" + str(self.story_details.width()) + "\" /><br>"
                         + "<h2>" + title + "</h2>"
                         + description)
                 else:
@@ -620,7 +621,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 subtitle = stories.DB_OFFICIAL[id]["localized_infos"][locale].get("subtitle", "")
                 url = os.path.join(CACHE_DIR, id)
                 self.story_details.setHtml(
-                    "<img src=\"" + url + "\"/><br>"
+                    "<img src=\"" + url + "\" width=\"" + str(self.story_details.width()) + "\" /><br>"
                     + "<h2>" + title + "</h2>"
                     + "<h3>" + subtitle + "</h3>" 
                     + description)
@@ -640,7 +641,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 title = stories.DB_THIRD_PARTY[id].get("title", "")
                 url = os.path.join(CACHE_DIR, id)
                 self.story_details.setHtml(
-                    "<img src=\"" + url + "\"/><br>"
+                    "<img src=\"" + url + "\" width=\"" + str(self.story_details.width()) + "\" /><br>"
                     + "<h2>" + title + "</h2>"
                     + description)
             else:
