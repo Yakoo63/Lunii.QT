@@ -6,7 +6,7 @@ from pathlib import WindowsPath
 import psutil
 import requests
 from PySide6 import QtCore, QtGui
-from PySide6.QtCore import QItemSelectionModel, QUrl, QSize, QTimer
+from PySide6.QtCore import QItemSelectionModel, QUrl, QSize, QTimer, QModelIndex, QSortFilterProxyModel
 from PySide6.QtGui import QFont, QShortcut, QKeySequence, QPixmap, Qt, QDesktopServices, QIcon, QGuiApplication, QColor, QStandardItem, QStandardItemModel, QPainter
 from PySide6.QtWidgets import QMainWindow, QTreeWidgetItem, QFileDialog, QMessageBox, QLabel, QFrame, QHeaderView, \
     QDialog, QApplication, QButtonGroup, QListView
@@ -71,7 +71,13 @@ class NaturalSortTreeWidgetItem(QTreeWidgetItem):
         self_data = self.text(col)
         other_data = other.text(col)
         return natural_sort_key(self_data) < natural_sort_key(other_data)
-    
+
+class NaturalSortProxyModel(QSortFilterProxyModel):
+    def lessThan(self, left: QModelIndex, right: QModelIndex) -> bool:
+        left_data = self.sourceModel().data(left)
+        right_data = self.sourceModel().data(right)
+        return natural_sort_key(left_data) < natural_sort_key(right_data)
+
 class VLine(QFrame):
     def __init__(self):
         super(VLine, self).__init__()
@@ -134,7 +140,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.worker_check_version()
 
         self.showMaximized()
-        self.debug_dialog.hide()
 
     def init_ui(self):
         self.setupUi(self)
@@ -164,14 +169,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tree_stories.setColumnWidth(COL_DB, COL_DB_SIZE)
         self.tree_stories.setColumnHidden(COL_SIZE, self.sizes_hidden)
 
-        self.radio_tree_official_stories = QButtonGroup()
-        self.radio_tree_official_stories.addButton(self.radio_tree_table)
-        self.radio_tree_official_stories.addButton(self.radio_tree_gallery)
+        self.radio_group_official = QButtonGroup()
+        self.radio_group_official.addButton(self.radio_official_table)
+        self.radio_group_official.addButton(self.radio_official_gallery)
+
+        self.radio_group_third_party = QButtonGroup()
+        self.radio_group_third_party.addButton(self.radio_third_party_table)
+        self.radio_group_third_party.addButton(self.radio_third_party_gallery)
         
         self.list_stories_official.setViewMode(QListView.IconMode)
         self.list_stories_official.setIconSize(QSize(512, 512))
         self.list_stories_official.setResizeMode(QListView.Adjust)
         self.list_stories_official.setVisible(False)
+        
+        self.list_stories_third_party.setViewMode(QListView.IconMode)
+        self.list_stories_third_party.setIconSize(QSize(512, 512))
+        self.list_stories_third_party.setResizeMode(QListView.Adjust)
+        self.list_stories_third_party.setVisible(False)
 
         self.local_db_line_edit.setText(stories.DB_LOCAL_PATH)
         self.third_party_db_line_edit.setText(stories.DB_THIRD_PARTY_LOCAL_PATH)
@@ -275,6 +289,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tree_stories_official.itemDoubleClicked.connect(self.install_or_remove_story_on_lunii)
         self.list_stories_official.doubleClicked.connect(self.install_or_remove_story_on_lunii)
         self.tree_stories_third_party.doubleClicked.connect(self.install_or_remove_story_on_lunii)
+        self.list_stories_third_party.doubleClicked.connect(self.install_or_remove_story_on_lunii)
 
         self.add_story_button.clicked.connect(self.install_or_remove_story_on_lunii)
         self.remove_story_button.clicked.connect(self.install_or_remove_story_on_lunii)
@@ -289,7 +304,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.third_party_db_choose_folder_button.clicked.connect(self.ts_open_third_party_local_folder)
         self.third_party_db_line_edit.editingFinished.connect(self.ts_open_third_party_local_folder_changed)
 
-        self.radio_tree_official_stories.buttonToggled.connect(self.stories_toggle_mode)
+        self.radio_group_official.buttonToggled.connect(self.official_toggle_mode)
+        self.radio_group_third_party.buttonToggled.connect(self.third_party_toggle_mode)
 
         QApplication.instance().focusChanged.connect(self.onFocusChanged)
 
@@ -332,18 +348,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.add_story_button.setEnabled(False)
         self.remove_story_button.setEnabled(False)
 
-    def stories_toggle_mode(self, button, checked):
+    def official_toggle_mode(self, button, checked):
         self.story_details.setText("")
         self.add_story_button.setEnabled(False)
         self.remove_story_button.setEnabled(False)
         if checked:
-            if button == self.radio_tree_table:
+            if button == self.radio_official_table:
                 self.tree_stories_official.show()
                 self.list_stories_official.hide()
                 
             else:
                 self.tree_stories_official.hide()
                 self.list_stories_official.show()
+
+    def third_party_toggle_mode(self, button, checked):
+        self.story_details.setText("")
+        self.add_story_button.setEnabled(False)
+        self.remove_story_button.setEnabled(False)
+        if checked:
+            if button == self.radio_third_party_table:
+                self.tree_stories_third_party.show()
+                self.list_stories_third_party.hide()
+                
+            else:
+                self.tree_stories_third_party.hide()
+                self.list_stories_third_party.show()
 
     def __set_dbg_wndSize(self):
         # Move the sub-window alongside the main window
@@ -531,7 +560,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             return
         
         if self.tabWidget.currentIndex() == 1:
-            if self.radio_tree_official_stories.checkedButton() == self.radio_tree_table:
+            if self.radio_group_official.checkedButton() == self.radio_official_table:
                 current = self.tree_stories_official.currentItem()
                 name = current.text(COL_OFFICIAL_NAME)
                 installationId = current.text(COL_OFFICIAL_INSTALLED)
@@ -543,7 +572,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.sb_update(self.tr("Importing story '" + name + "' from '" + installationPath + "'..."))
                     self.worker_launch(ACTION_IMPORT, [installationPath])
 
-            elif self.radio_tree_official_stories.checkedButton() == self.radio_tree_gallery:
+            elif self.radio_group_official.checkedButton() == self.radio_official_gallery:
                 selection_model = self.list_stories_official.selectionModel()
                 current_index = selection_model.currentIndex()
                 if current_index.isValid():
@@ -606,7 +635,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         elif self.tabWidget.currentIndex() == 1:
             id = None
-            if self.radio_tree_official_stories.checkedButton() == self.radio_tree_table:
+            if self.radio_group_official.checkedButton() == self.radio_official_table:
                 current = self.tree_stories_official.currentItem()
                 if current is not None:
                     id = current.text(COL_OFFICIAL_UUID)
@@ -615,7 +644,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.add_story_button.setEnabled(self.audio_device is not None and local_db_path != "" and lunii_story_id == "")
                     self.remove_story_button.setEnabled(self.audio_device is not None and lunii_story_id != "")
 
-            elif self.radio_tree_official_stories.checkedButton() == self.radio_tree_gallery:
+            elif self.radio_group_official.checkedButton() == self.radio_official_gallery:
                 selection_model = self.list_stories_official.selectionModel()
                 current_index = selection_model.currentIndex()
                 if current_index.isValid():
@@ -624,7 +653,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.add_story_button.setEnabled(self.audio_device is not None and data["local_db_path"] is not None and data["lunii_story_id"] is None)
                     self.remove_story_button.setEnabled(self.audio_device is not None and data["lunii_story_id"] is not None)
 
-            
             if id is not None:
                 locale = list(stories.DB_OFFICIAL[id]["locales_available"].keys())[0]
                 description = stories.DB_OFFICIAL[id]["localized_infos"][locale].get("description", "")
@@ -639,13 +667,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 
         elif self.tabWidget.currentIndex() == 2:
             id = None
-            current = self.tree_stories_third_party.currentItem()
-            if current is not None:
-                id = current.text(COL_THIRD_PARTY_UUID)
-                local_db_path = current.text(COL_THIRD_PARTY_PATH)
-                lunii_story_id = current.text(COL_THIRD_PARTY_INSTALLED)
-                self.add_story_button.setEnabled(self.audio_device is not None and local_db_path != "" and lunii_story_id == "")
-                self.remove_story_button.setEnabled(self.audio_device is not None and lunii_story_id != "")
+            if self.radio_group_third_party.checkedButton() == self.radio_third_party_table:
+                current = self.tree_stories_third_party.currentItem()
+                if current is not None:
+                    id = current.text(COL_THIRD_PARTY_UUID)
+                    local_db_path = current.text(COL_THIRD_PARTY_PATH)
+                    lunii_story_id = current.text(COL_THIRD_PARTY_INSTALLED)
+                    self.add_story_button.setEnabled(self.audio_device is not None and local_db_path != "" and lunii_story_id == "")
+                    self.remove_story_button.setEnabled(self.audio_device is not None and lunii_story_id != "")
+
+            elif self.radio_group_third_party.checkedButton() == self.radio_third_party_gallery:
+                selection_model = self.list_stories_third_party.selectionModel()
+                current_index = selection_model.currentIndex()
+                if current_index.isValid():
+                    data = current_index.data(Qt.UserRole)
+                    id = data["id"]
+                    self.add_story_button.setEnabled(self.audio_device is not None and data["local_db_path"] is not None and data["lunii_story_id"] is None)
+                    self.remove_story_button.setEnabled(self.audio_device is not None and data["lunii_story_id"] is not None)
 
             if id is not None and id in stories.DB_THIRD_PARTY:
                 description = stories.DB_THIRD_PARTY[id].get("description", "")
@@ -980,17 +1018,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tree_stories_official.clear()
         self.tree_stories_third_party.clear()
 
-        model = self.list_stories_official.model()
-        if model is not None:
-            model.clear() 
+        if self.list_stories_official.model() is not None:
+            self.list_stories_official.model().clear() 
+        if self.list_stories_third_party.model() is not None:
+            self.list_stories_third_party.model().clear() 
         
         self.ts_populate()
         self.ts_populate_official()
         self.ts_populate_third_party()
 
-        selectionModel = self.list_stories_official.selectionModel()
-        if selectionModel is not None:
-            selectionModel.currentChanged.connect(self.story_selected)
+        self.list_stories_official.selectionModel().currentChanged.connect(self.story_selected)
+        self.list_stories_third_party.selectionModel().currentChanged.connect(self.story_selected)
 
     def ts_populate(self):
         # empty device
@@ -1078,9 +1116,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # getting filter text
         le_filter = self.le_filter.text()
 
-        list_stories_official_model = QStandardItemModel()
-
         # adding items
+        list_stories_model = QStandardItemModel()
+
         for id in stories.DB_OFFICIAL:
             name = stories.DB_OFFICIAL[id]["title"]
 
@@ -1112,16 +1150,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 continue
 
             self.tree_stories_official.addTopLevelItem(item)
+
+            local_db_path = item.text(COL_OFFICIAL_PATH)
+            lunii_story_id = item.text(COL_OFFICIAL_INSTALLED)
+            
             pixmap = QPixmap()
             pixmap.loadFromData(stories.get_picture(id))
             scaled_pixmap = pixmap.scaled(300, 300, aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
-            icon_with_banner = QIcon(self.create_icon_with_banner(scaled_pixmap, local_story != [], lunii_story is not None))
-            item = QStandardItem(QIcon(icon_with_banner), name)
-            item.setData({"id": id, "local_db_path": None if local_story == [] else local_story[stories.DB_LOCAL_COL_PATH], "lunii_story_id": lunii_story}, Qt.UserRole)
+            icon_with_banner = QIcon(self.create_icon_with_banner(scaled_pixmap, local_db_path != "", lunii_story_id != ""))
+            itemList = QStandardItem(QIcon(icon_with_banner), name)
+            itemList.setData({"id": id, "local_db_path": local_db_path, "lunii_story_id": lunii_story_id}, Qt.UserRole)
 
-            list_stories_official_model.appendRow(item)
+            list_stories_model.appendRow(itemList)
 
-        self.list_stories_official.setModel(list_stories_official_model)
+
+        sorted_model = NaturalSortProxyModel()
+        sorted_model.setSourceModel(list_stories_model)
+        sorted_model.sort(0)  
+
+        self.list_stories_official.setModel(sorted_model)
+
 
     def ts_populate_third_party(self):
         # creating font
@@ -1130,6 +1178,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # getting filter text
         le_filter = self.le_filter.text()
+
+        list_stories_model = QStandardItemModel()
 
         files_in_local_db_by_name = []
         files_in_local_db_by_id = []
@@ -1186,6 +1236,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             self.tree_stories_third_party.addTopLevelItem(item)
 
+            pixmap = QPixmap()
+            pixmap.loadFromData(stories.get_picture(id))
+            scaled_pixmap = pixmap.scaled(300, 300, aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
+            icon_with_banner = QIcon(self.create_icon_with_banner(scaled_pixmap, local_story != [], lunii_story is not None))
+            itemList = QStandardItem(QIcon(icon_with_banner), item.text(COL_THIRD_PARTY_NAME))
+            itemList.setData({"id": id, "local_db_path": item.text(COL_THIRD_PARTY_PATH), "lunii_story_id": item.text(COL_THIRD_PARTY_INSTALLED)}, Qt.UserRole)
+
+            list_stories_model.appendRow(itemList)
+
         # adding items from Local Path
         for encoded_name in stories.DB_THIRD_PARTY_LOCAL_BY_NAME:
             name = stories.DB_THIRD_PARTY_LOCAL_BY_NAME[encoded_name][stories.DB_THIRD_PARTY_LOCAL_COL_NAME]
@@ -1196,6 +1255,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if encoded_name in files_in_local_db_by_name or uuid in files_in_local_db_by_id:
                 continue
 
+            lunii_story = None if self.audio_device is None else self.audio_device.stories.get_story(uuid)
             size = round(os.path.getsize(os.path.join(stories.DB_THIRD_PARTY_LOCAL_PATH, path))/1024/1024, 1)
 
             # filtering 
@@ -1212,6 +1272,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             item.setText(COL_THIRD_PARTY_AGE, age)
 
             self.tree_stories_third_party.addTopLevelItem(item)
+
+            pixmap = QPixmap()
+            pixmap.loadFromData(stories.get_picture(uuid))
+            scaled_pixmap = pixmap.scaled(300, 300, aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
+            icon_with_banner = QIcon(self.create_icon_with_banner(scaled_pixmap, True, lunii_story is not None))
+            itemList = QStandardItem(QIcon(icon_with_banner), name)
+            itemList.setData({"id": uuid, "local_db_path": path, "lunii_story_id": "" if lunii_story is None else lunii_story.short_uuid}, Qt.UserRole)
+
+            list_stories_model.appendRow(itemList)
+
+        sorted_model = NaturalSortProxyModel()
+        sorted_model.setSourceModel(list_stories_model)
+        sorted_model.sort(0)  
+        
+        self.list_stories_third_party.setModel(sorted_model)
 
     def create_icon_with_banner(self, base_pixmap, available, installed):
         pixmap = base_pixmap.copy()
@@ -1680,8 +1755,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tree_stories_third_party.setEnabled(False)
         self.list_stories_official.setEnabled(False)
         self.tabWidget.setEnabled(False)
-        self.radio_tree_gallery.setEnabled(False)
-        self.radio_tree_table.setEnabled(False)
+        self.radio_official_gallery.setEnabled(False)
+        self.radio_official_table.setEnabled(False)
+        self.radio_third_party_gallery.setEnabled(False)
+        self.radio_third_party_table.setEnabled(False)
         self.add_story_button.setEnabled(False)
         self.remove_story_button.setEnabled(False)
         self.btn_refresh.setEnabled(False)
@@ -1693,8 +1770,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tree_stories_third_party.setEnabled(True)
         self.list_stories_official.setEnabled(True)
         self.tabWidget.setEnabled(True)
-        self.radio_tree_gallery.setEnabled(True)
-        self.radio_tree_table.setEnabled(True)
+        self.radio_official_gallery.setEnabled(True)
+        self.radio_official_table.setEnabled(True)
+        self.radio_third_party_gallery.setEnabled(True)
+        self.radio_third_party_table.setEnabled(True)
         self.add_story_button.setEnabled(True)
         self.remove_story_button.setEnabled(True)
         self.btn_db.setEnabled(True)
