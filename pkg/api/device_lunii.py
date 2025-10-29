@@ -1324,7 +1324,7 @@ class LuniiDevice(QtCore.QObject):
 
         return ""
 
-    def import_story_studio_zip(self, story_path):
+    def import_studio_zip(self, story_path):
         # checking if archive is OK
         try:
             with zipfile.ZipFile(file=story_path):
