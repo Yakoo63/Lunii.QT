@@ -328,8 +328,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout_7 = QVBoxLayout()
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.local_db_layout = QHBoxLayout()
         self.local_db_layout.setSpacing(2)
         self.local_db_layout.setObjectName(u"local_db_layout")
@@ -365,7 +365,7 @@ class Ui_MainWindow(object):
         self.local_db_layout.addWidget(self.local_db_choose_folder_button)
 
 
-        self.verticalLayout.addLayout(self.local_db_layout)
+        self.verticalLayout_7.addLayout(self.local_db_layout)
 
         self.list_stories_official = QListView(self.tabOfficialStories)
         self.list_stories_official.setObjectName(u"list_stories_official")
@@ -377,7 +377,7 @@ class Ui_MainWindow(object):
         self.list_stories_official.setDefaultDropAction(Qt.DropAction.IgnoreAction)
         self.list_stories_official.setWordWrap(True)
 
-        self.verticalLayout.addWidget(self.list_stories_official)
+        self.verticalLayout_7.addWidget(self.list_stories_official)
 
         self.tree_stories_official = QTreeWidget(self.tabOfficialStories)
         __qtreewidgetitem5 = QTreeWidgetItem()
@@ -407,10 +407,10 @@ class Ui_MainWindow(object):
         self.tree_stories_official.setExpandsOnDoubleClick(True)
         self.tree_stories_official.header().setStretchLastSection(False)
 
-        self.verticalLayout.addWidget(self.tree_stories_official)
+        self.verticalLayout_7.addWidget(self.tree_stories_official)
 
 
-        self.horizontalLayout.addLayout(self.verticalLayout)
+        self.horizontalLayout.addLayout(self.verticalLayout_7)
 
 
         self.verticalLayout_4.addLayout(self.horizontalLayout)
@@ -550,7 +550,7 @@ class Ui_MainWindow(object):
         self.pbar_total = QProgressBar(self.layoutWidget)
         self.pbar_total.setObjectName(u"pbar_total")
         self.pbar_total.setMaximumSize(QSize(16777215, 10))
-        self.pbar_total.setValue(24)
+        self.pbar_total.setValue(12)
         self.pbar_total.setTextVisible(False)
 
         self.totalLayout.addWidget(self.pbar_total)
@@ -571,13 +571,29 @@ class Ui_MainWindow(object):
 
         self.storyLayout.addWidget(self.lbl_story)
 
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setSpacing(1)
+        self.verticalLayout.setObjectName(u"verticalLayout")
         self.pbar_story = QProgressBar(self.layoutWidget)
         self.pbar_story.setObjectName(u"pbar_story")
         self.pbar_story.setMaximumSize(QSize(16777215, 10))
         self.pbar_story.setValue(24)
         self.pbar_story.setTextVisible(False)
 
-        self.storyLayout.addWidget(self.pbar_story)
+        self.verticalLayout.addWidget(self.pbar_story)
+
+        self.pbar_file = QProgressBar(self.layoutWidget)
+        self.pbar_file.setObjectName(u"pbar_file")
+        self.pbar_file.setMaximumSize(QSize(16777215, 6))
+        self.pbar_file.setBaseSize(QSize(0, 0))
+        self.pbar_file.setStyleSheet(u"QProgressBar::chunk { background-color: #6c6c6c; }")
+        self.pbar_file.setValue(48)
+        self.pbar_file.setTextVisible(False)
+
+        self.verticalLayout.addWidget(self.pbar_file)
+
+
+        self.storyLayout.addLayout(self.verticalLayout)
 
 
         self.progressLayout.addLayout(self.storyLayout)
@@ -672,7 +688,7 @@ class Ui_MainWindow(object):
         self.actionExit.triggered.connect(MainWindow.close)
         self.combo_device.currentIndexChanged.connect(self.tree_stories.clear)
 
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -770,6 +786,18 @@ class Ui_MainWindow(object):
         self.add_story_button.setText(QCoreApplication.translate("MainWindow", u"Add Story", None))
         self.remove_story_button.setText(QCoreApplication.translate("MainWindow", u"Remove Story", None))
         self.lbl_total.setText(QCoreApplication.translate("MainWindow", u"Total", None))
+#if QT_CONFIG(tooltip)
+        self.pbar_total.setToolTip(QCoreApplication.translate("MainWindow", u"Operation progress", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
+        self.lbl_story.setToolTip(QCoreApplication.translate("MainWindow", u"Writing speed", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
+        self.pbar_story.setToolTip(QCoreApplication.translate("MainWindow", u"Story progress", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
+        self.pbar_file.setToolTip(QCoreApplication.translate("MainWindow", u"File progress", None))
+#endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(tooltip)
         self.btn_abort.setToolTip(QCoreApplication.translate("MainWindow", u"Abort current process", None))
 #endif // QT_CONFIG(tooltip)

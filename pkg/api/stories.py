@@ -13,6 +13,7 @@ from pkg.api.constants import DEFAULT_THIRD_PARTY_DB_LOCAL_PATH, DEFAULT_DB_LOCA
 
 STORY_UNKNOWN  = "Unknown story (maybe a User created story)..."
 DESC_NOT_FOUND = "No description found."
+AUTHOR_NOT_FOUND = "No authors."
 
 # https://server-data-prod.lunii.com/v2/packs
 DB_OFFICIAL = {}
@@ -68,6 +69,10 @@ class StudioStory:
     @property
     def name(self):
         return self.title
+
+    @property
+    def author(self):
+        return AUTHOR_NOT_FOUND
 
     @property
     def str_uuid(self):
@@ -519,6 +524,24 @@ class Story:
 
         return DESC_NOT_FOUND
 
+    @property
+    def author(self):
+        one_uuid = str(self.uuid).upper()
+
+        for db in [DB_OFFICIAL, DB_THIRD_PARTY]:
+            # checking current db
+            if one_uuid in db:
+                if db[one_uuid].get("authors"):
+                    key = list(db[one_uuid]["authors"].keys())[0]
+                    author: str = db[one_uuid]["authors"][key].get("name")
+                    return author
+                else:
+                    author = db[one_uuid].get("author")
+                    if author:
+                        return author
+
+        return AUTHOR_NOT_FOUND
+
     def get_picture(self, reload: bool = False):
         one_uuid = str(self.uuid).upper()
         return get_picture(one_uuid, reload)
@@ -542,7 +565,6 @@ class Story:
     def is_official(self):
         global DB_OFFICIAL
         return str(self.uuid).upper() in DB_OFFICIAL
-
 
 class StoryList(List[Story]):
     def __init__(self):
@@ -573,7 +595,18 @@ def story_is_studio(contents):
 
     return False
 
+def story_is_plain(contents):
+    return all(any(file.lower().endswith(pattern) for file in contents) for pattern in [FILE_UUID])
+
+def story_is_flam(contents):
+    return all(any(file.lower().endswith(pattern) for file in contents) for pattern in [".lsf"])
+
+def story_is_flam_plain(contents):
+    return all(any(file.lower().endswith(pattern) for file in contents) for pattern in [".lua"])
+
 
 def story_is_lunii(contents):
-    return all(any(file.endswith(pattern) for file in contents) for pattern in ["ri", "si", "li", "ni"])
+    return all(any(file.lower().endswith(pattern) for file in contents) for pattern in ["ri", "si", "li", "ni"])
 
+def story_is_lunii_plain(contents):
+    return all(any(file.lower().endswith(pattern) for file in contents) for pattern in ["ri.plain", "si.plain", "li.plain"])

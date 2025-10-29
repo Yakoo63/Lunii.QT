@@ -88,6 +88,12 @@ class ierWorker(QObject):
     def _task_import(self):
         success = 0
 
+        # on flam device, import is very long. Showing log to notify user
+        if len(self.items) and self.audio_device.device_version == FLAM_V1:
+            self.signal_showlog.emit()
+            self.signal_message.emit(self.tr("😮‍💨 This process is veeeeeeeeery long due to Flam firmware. 😴 Be patient ..."))
+            self.signal_message.emit(self.tr("Importing stories..."))
+
         # importing selected files
         for index, file in enumerate(self.items):
             if self.abort_process:
@@ -98,7 +104,14 @@ class ierWorker(QObject):
             ts_start = time.time()
             if self.audio_device.import_story(file):
                 ts_end = time.time()
-                self.signal_message.emit(self.tr("Time to import : {}s").format(round(ts_end-ts_start, 3)))
+                duration = ts_end - ts_start
+                if duration > 120:
+                    minutes = int(duration // 60)
+                    seconds = int(duration % 60)
+                    time_msg = "{} min {} s".format(minutes, seconds)
+                else:
+                    time_msg = "{:d} s".format(int(duration))
+                self.signal_message.emit(self.tr("Time to import : {}").format(time_msg))
                 self.signal_message.emit(self.tr("👍 New story imported : '{}'").format(file))
                 success += 1
             else:
@@ -131,10 +144,10 @@ class ierWorker(QObject):
 
             # Official story export is forbidden
             story_to_export = self.audio_device.stories.get_story(str_uuid)
-            if not constants.REFRESH_CACHE and story_to_export.is_official():
-                self.signal_message.emit(self.tr("🛑 Forbidden to export : '{}'").format(story_to_export.name))
-                self.signal_refresh.emit()
-                continue
+            # if not constants.REFRESH_CACHE and story_to_export.is_official():
+            #     self.signal_message.emit(self.tr("🛑 Forbidden to export : '{}'").format(story_to_export.name))
+            #     self.signal_refresh.emit()
+            #     continue
 
             self.signal_total_progress.emit(index, len(self.items))
             
@@ -198,9 +211,18 @@ class ierWorker(QObject):
             if story.size != -1:
                 continue
 
+            # which BASEDIR ? hidden or not ?
+            basedir = self.audio_device.STORIES_BASEDIR
+            if story.hidden: 
+                basedir = self.audio_device.HIDDEN_STORIES_BASEDIR
+            uuid = story.short_uuid
+            if self.audio_device.device_version == FLAM_V1:
+                uuid = str(story.uuid)
+            story_path = os.path.join(self.audio_device.mount_point, basedir, uuid)
+
             # processing all files in a story
             story.size = 0
-            for parent_dir, _, files in os.walk(f"{self.audio_device.mount_point}/{self.audio_device.STORIES_BASEDIR}/{str(story.uuid) if self.audio_device.device_version == FLAM_V1 else story.short_uuid }"):
+            for parent_dir, _, files in os.walk(story_path):
                 for file in files:
                     story.size += os.path.getsize(os.path.join(parent_dir, file))
 

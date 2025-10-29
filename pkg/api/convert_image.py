@@ -2,6 +2,68 @@
 from io import BytesIO
 from PIL import Image
 
+def pixel_toABRG3553(r, g, b, a):
+    """Convert 24-bit RGB8888 (r,g,b,a) to 16-bit ABR3553"""
+    # Truncate to 5/6 bits
+    a3 = (a * 7) // 255
+    b5 = (b * 31) // 255
+    r5 = (r * 31) // 255
+    g3 = (g * 7) // 255
+
+    # Pack in BGR565 order: [AAAB BBBB RRRR RGGG]
+    value = (a3 << 13) | (b5 << 8) | (r5 << 3) | g3
+
+    # Return as two bytes (MSB first)
+    return value.to_bytes(2, byteorder='big')
+
+def image_to_liff(image_data):
+    image_bytesio = BytesIO(image_data)
+    img = Image.open(image_bytesio)
+
+    # reading image properties
+    width, height = img.size
+
+    # reading image format
+    # img_format = img.format
+
+    # print(f"Image format: {img_format}, size: {width}x{height} (total {len(image_data)} bytes)")
+
+    # Resize the image to have a max width or height of 104 pixels
+    max_size = 104
+    img.thumbnail((max_size, max_size), Image.Resampling.BICUBIC)
+
+    width, height = img.size
+    # print(f"Updated image: {img_format}, size: {width}x{height} (total {len(img.tobytes())} bytes)")
+
+    # write LIFF header as bytes
+    liff_data = b"liff"  # LIFF magic number
+    liff_data += width.to_bytes(4, byteorder='big')
+    liff_data += height.to_bytes(4, byteorder='big')
+    liff_data += b"\xA2" # channel info
+
+    # writing image data, each pixel in BGR prefixed with FF
+    for pixel in img.getdata():
+        if img.mode == "RGB":
+            r, g, b = pixel
+            a = 255
+        elif img.mode == "RGBA":
+            r, g, b, a = pixel
+        elif img.mode == "L":
+            r = g = b = pixel
+            a = 255
+        else:
+            raise ValueError(f"Unsupported image mode: {img.mode}")
+
+        liff_data += b"\xFE"  # prefix byte
+        # encode pixel from RGB to BRG565
+        liff_data += pixel_toABRG3553(r, g, b, a)
+
+    # writing footer
+    liff_data += b"\x00" * 7
+    liff_data += b"\x01"
+
+    # print(f"Converted LIFF size: {len(liff_data)} bytes")
+    return liff_data
 
 def image_to_bitmap_rle4(image_data):
     image_bytesio = BytesIO(image_data)
@@ -108,7 +170,7 @@ def image_to_bitmap_rle4(image_data):
         data_size & 0xff, (data_size >> 8) & 0xff, (data_size >> 16) & 0xff, (data_size >> 24) & 0xff,
         0x00, 0x00, 0x00, 0x00,  # Horizontal resolution
         0x00, 0x00, 0x00, 0x00,  # Vertical resolution
-        0x00, 0x00, 0x00, 0x00,  # Palette colors (16)
+        0x10, 0x00, 0x00, 0x00,  # Palette colors (16)
         0x00, 0x00, 0x00, 0x00,  # Important colors (0 = all)
     ]
 

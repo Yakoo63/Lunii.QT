@@ -58,49 +58,240 @@ Les logos sont fournis par &lt;b&gt;malexxx&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
 <context>
     <name>DebugDialog</name>
     <message>
-        <location filename="../pkg/ui/debug_ui.py" line="55"/>
+        <location filename="../pkg/ui/debug_ui.py" line="61"/>
         <source>Debug Log</source>
         <translation>Journal de debug</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/debug_ui.py" line="66"/>
+        <location filename="../pkg/ui/debug_ui.py" line="72"/>
         <source>(Log filter text)</source>
         <translation>(texte pour filter le log)</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/debug_ui.py" line="67"/>
+        <location filename="../pkg/ui/debug_ui.py" line="73"/>
         <source>Try &quot;error&quot; or &quot;fail&quot;.</source>
         <translation>Essayer &quot;erreur&quot; ou &quot;echec&quot;.</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/debug_ui.py" line="82"/>
+        <location filename="../pkg/ui/debug_ui.py" line="88"/>
         <source>Application Log Empty ...</source>
         <translation>Le journal de l&apos;application est vide ...</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/debug_ui.py" line="94"/>
+        <location filename="../pkg/ui/debug_ui.py" line="100"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/debug_ui.py" line="95"/>
+        <location filename="../pkg/ui/debug_ui.py" line="101"/>
         <source>Clear</source>
         <translation>Vider</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/debug_ui.py" line="96"/>
+        <location filename="../pkg/ui/debug_ui.py" line="102"/>
         <source>Save</source>
         <translation>Enregistrer</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/debug_ui.py" line="171"/>
+        <location filename="../pkg/ui/debug_ui.py" line="177"/>
         <source>Save Log</source>
         <translation>Enregistrer le journal</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/debug_ui.py" line="171"/>
+        <location filename="../pkg/ui/debug_ui.py" line="177"/>
         <source>Text Files (*.txt);;All Files (*)</source>
         <translation>Fichiers texte (*.txt);;Tous les fichiers (*)</translation>
+    </message>
+</context>
+<context>
+    <name>FlamDevice</name>
+    <message>
+        <source>Not a valid UUID - {}</source>
+        <translation type="vanished">UUID non valide - {}</translation>
+    </message>
+    <message>
+        <source>Recovered - {} - {}</source>
+        <translation type="vanished">Récupéré - {} - {}</translation>
+    </message>
+    <message>
+        <source>Found - {} - {}</source>
+        <translation type="vanished">Trouvé - {} - {}</translation>
+    </message>
+    <message>
+        <source>Skipping lost story (seems broken/incomplete) - {} - {}</source>
+        <translation type="vanished">On ignore cette histoire (semble corrompue ou incomplète) - {} - {}</translation>
+    </message>
+    <message>
+        <source>Already in list but invalid - {} - {}</source>
+        <translation type="vanished">Déjà dans la liste, mais invalide - {} - {}</translation>
+    </message>
+    <message>
+        <source>Already in list - {} - {}</source>
+        <translation type="vanished">Déjà dans la liste - {} - {}</translation>
+    </message>
+    <message>
+        <source>Deleting - {}</source>
+        <translation type="vanished">Supression - {}</translation>
+    </message>
+    <message>
+        <source>Failed to delete - {}</source>
+        <translation type="vanished">Impossible de supprimer - {}</translation>
+    </message>
+    <message>
+        <source>🚧 Loading {}...</source>
+        <translation type="vanished">🚧 Chargement de {}...</translation>
+    </message>
+    <message>
+        <source>Not enough space left on Flam (only {}MB)</source>
+        <translation type="vanished">Pas assez de place restant sur la Flam (reste {}Mo)</translation>
+    </message>
+    <message>
+        <source>Please update your Flam with v2.x.x to support Lunii Stories</source>
+        <translation type="vanished">Veuillez mettre à jour votre Flam avec la v2.x.x pour bénéfiier des histoires officielles Lunii</translation>
+    </message>
+    <message>
+        <source>No UUID file found in archive. Unable to add this story.</source>
+        <translation type="vanished">Fichier UUID introuvable dans l&apos;archive. Impossible de charger cette histoire.</translation>
+    </message>
+    <message>
+        <source>&apos;{}&apos; is already loaded !</source>
+        <translation type="vanished">&apos;{}&apos; est déjà chargée !</translation>
+    </message>
+    <message>
+        <source>Import aborted, performing cleanup on current story...</source>
+        <translation type="vanished">Chargement interrompu, nettoyage en cours...</translation>
+    </message>
+    <message>
+        <source>File {}/{} &gt; {}</source>
+        <translation type="vanished">Fichier {}/{} &gt; {}</translation>
+    </message>
+    <message>
+        <source>Authorization file creation...</source>
+        <translation type="vanished">Création du fichier d&apos;autorisation...</translation>
+    </message>
+    <message>
+        <source>Transciphering Flam story</source>
+        <translation type="vanished">Transchiffrement de l&apos;histoire Flam</translation>
+    </message>
+    <message>
+        <source>Flam story backup is incomplete, missing key file.</source>
+        <translation type="vanished">Sauvegarde incomplète d&apos;une histoire Flam, le fichier key est manquant.</translation>
+    </message>
+    <message>
+        <source>Restoring Flam story backup</source>
+        <translation type="vanished">Restauration de la sauvegarde d&apos;une histoire Flam</translation>
+    </message>
+    <message>
+        <source>&gt; Adding UUID ...</source>
+        <translation type="vanished">&gt; Ajout de l&apos;UUID ...</translation>
+    </message>
+    <message>
+        <source>UUID directory is missing in archive !</source>
+        <translation type="vanished">L&apos;archive ne contient pas le dossier UUID !</translation>
+    </message>
+    <message>
+        <source>Archive seems to be made of Lunii story (Flam story expected)</source>
+        <translation type="vanished">Cette archive semble être une histoire Lunii (attendu une histoire Flam)</translation>
+    </message>
+    <message>
+        <source>&apos;{}&apos; is already loaded, aborting !</source>
+        <translation type="vanished">&apos;{}&apos; est déjà chargée, annulation !</translation>
+    </message>
+    <message>
+        <source>Transciphering file {}</source>
+        <translation type="vanished">Transchiffrement du ficiher {}</translation>
+    </message>
+    <message>
+        <source>UUID parse error {}</source>
+        <translation type="vanished">Erreur de lecture de l&apos;UUID {}</translation>
+    </message>
+    <message>
+        <source>Archive seems to be made of Lunii story (expected a Flam story)</source>
+        <translation type="vanished">Cette archive semble être une histoire Lunii (au lieu d&apos;une histoire Flam)</translation>
+    </message>
+    <message>
+        <source>Reading 7zip archive... (takes time)</source>
+        <translation type="vanished">Lecture de l&apos;archive 7zip... (prend du temps)</translation>
+    </message>
+    <message>
+        <source>Corrupted file format. Unable to add this story.</source>
+        <translation type="vanished">Archive corrompue. Impossible de charger cette histoire.</translation>
+    </message>
+    <message>
+        <source>plain.pk format detected ! Unable to add this story.</source>
+        <translation type="vanished">Format plain.pk détecté, au lieu de STUdio ! Impossible de charger cette histoire.</translation>
+    </message>
+    <message>
+        <source>missing &apos;story.json&apos;. Unable to add this story.</source>
+        <translation type="vanished">Fichier &apos;story.json&apos; manquant. Impossible de charger cette histoire.</translation>
+    </message>
+    <message>
+        <source>STUdio story with non MP3 audio file. You need FFMPEG tool to import such kind of story, refer to README.md</source>
+        <translation type="vanished">Histoire STUdio avec des audio non MP3. L&apos;outil FFMPEG est nécessaire pour ce type d&apos;histoire, consulter README.md</translation>
+    </message>
+    <message>
+        <source>⌛ Removing tags from audio {}</source>
+        <translation type="vanished">⌛ Suppression des tags de l&apos;audio {}</translation>
+    </message>
+    <message>
+        <source>Night mode file creation...</source>
+        <translation type="vanished">Création du fichier Mode Nuit...</translation>
+    </message>
+    <message>
+        <source>🚧 Exporting {} - {}</source>
+        <translation type="vanished">🚧 Export de {} - {}</translation>
+    </message>
+    <message>
+        <source>&gt; Zipping story ...</source>
+        <translation type="vanished">&gt; Compression de l&apos;histoire ...</translation>
+    </message>
+    <message>
+        <source>failed to create ZIP - {}</source>
+        <translation type="vanished">Erreur pendant la création du ZIP - {}</translation>
+    </message>
+    <message>
+        <source>&gt;&gt; Adding UUID ...</source>
+        <translation type="vanished">&gt; Ajout de l&apos;UUID ...</translation>
+    </message>
+    <message>
+        <source>&gt; Adding thumbnail ...</source>
+        <translation type="vanished">&gt; Ajout de la vignette ...</translation>
+    </message>
+    <message>
+        <source>&gt; Adding metadata ...</source>
+        <translation type="vanished">&gt; Ajout des metadata ...</translation>
+    </message>
+    <message>
+        <source>at least {} match your pattern. Try a longer UUID.</source>
+        <translation type="vanished">au moins {} correspondances trouvées. Essayez avec un bout d&apos;UUID plus long.</translation>
+    </message>
+    <message>
+        <source>This story format is not supported for export.</source>
+        <translation type="vanished">Ce format d&apos;histoire n&apos;est pas exportable.</translation>
+    </message>
+    <message>
+        <source>This story is not present on your storyteller</source>
+        <translation type="vanished">Cette histoire n&apos;est pas présente sur votre appareil</translation>
+    </message>
+    <message>
+        <source>🚧 Removing {} - {}...</source>
+        <translation type="vanished">🚧 Suppresion {} - {}...</translation>
+    </message>
+    <message>
+        <source>Reading Flam loaded stories...</source>
+        <translation type="vanished">Lecture des histoires chargées dans la Flam</translation>
+    </message>
+    <message>
+        <source>Found duplicate story, cleaning...</source>
+        <translation type="vanished">Histoire dupliquée identifiée, nettoyage...</translation>
+    </message>
+    <message>
+        <source>Read {} stories</source>
+        <translation type="vanished">{} histoires lues</translation>
+    </message>
+    <message>
+        <source>Read {} hidden stories</source>
+        <translation type="vanished">{} histoires cachées lues</translation>
     </message>
 </context>
 <context>
@@ -117,6 +308,245 @@ Les logos sont fournis par &lt;b&gt;malexxx&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
     </message>
 </context>
 <context>
+    <name>LuniiDevice</name>
+    <message>
+        <source>This story is not present on your storyteller</source>
+        <translation type="vanished">Cette histoire n&apos;est pas présente sur votre appareil</translation>
+    </message>
+    <message>
+        <source>No backup of v{:d} metadata file found, creating one...</source>
+        <translation type="vanished">Aucune sauvegarde trouvée pour le fichier metadata v{:d}, copie en cours...</translation>
+    </message>
+    <message>
+        <source>Forging story keys for v6 metadata file</source>
+        <translation type="vanished">Préparation des clés histoire au format v6</translation>
+    </message>
+    <message>
+        <source>Forging story keys for v7+ metadata file</source>
+        <translation type="vanished">Préparation des clés histoire au format v7</translation>
+    </message>
+    <message>
+        <source>v3 key file read from {}</source>
+        <translation type="vanished">Fichier clé appareil v3 lu depuis {}</translation>
+    </message>
+    <message>
+        <source>.md v{:d} file found ({})</source>
+        <translation type="vanished">.md v{:d} fichier lu ({})</translation>
+    </message>
+    <message>
+        <source>.md file is not v{:d} ({})</source>
+        <translation type="vanished">Le fichier .md n&apos;est pas une v{:d} ({})</translation>
+    </message>
+    <message>
+        <source>.md file SNU mismatch ({}) vs. ({})</source>
+        <translation type="vanished">Le SNU du fichier ne correspond pas ({}) vs. ({})</translation>
+    </message>
+    <message>
+        <source>no .md v{:d} file found ({})</source>
+        <translation type="vanished">.md v{:d} fichier introuvable ({})</translation>
+    </message>
+    <message>
+        <source>🛑 corrupted metadata file ? (maybe SD corruption)</source>
+        <translation type="vanished">🛑 Fichier metadata corrompu ? (peut être une SD défectueuse)</translation>
+    </message>
+    <message>
+        <source>⚠️ Unsupported or corrupted metadata file v{:d}, checking for backups...</source>
+        <translation type="vanished">⚠️ Fichier metadata v{:d} non supporté ou corrompu, vérification d&apos;une sauvegarde...</translation>
+    </message>
+    <message>
+        <source>🛑 no keys at all, unable to import stories. See README on Github for help.</source>
+        <translation type="vanished">🛑 pas de clés, impossible d&apos;importer des histoires. Lisez le README sur Github.</translation>
+    </message>
+    <message>
+        <source>✅ story keys found, import supported.</source>
+        <translation type="vanished">✅ clés histoires trouvées, import possible.</translation>
+    </message>
+    <message>
+        <source>Missing {} in {}</source>
+        <translation type="vanished">{} manquant dans {}</translation>
+    </message>
+    <message>
+        <source>Bad authorization file bt in {}</source>
+        <translation type="vanished">Mauvais fichier d&apos;autorisation bt dans {}</translation>
+    </message>
+    <message>
+        <source>Authorization file creation...</source>
+        <translation type="vanished">Création du fichier d&apos;autorisation...</translation>
+    </message>
+    <message>
+        <source>Missing rf/{} in {}</source>
+        <translation type="vanished">rf/{} manquant dans {}</translation>
+    </message>
+    <message>
+        <source>Missing sf/{} in {}</source>
+        <translation type="vanished">sf/{} manquant dans {}</translation>
+    </message>
+    <message>
+        <source>Failed to decode ri or si file</source>
+        <translation type="vanished">Echec de déchiffrement du fichier ri ou si</translation>
+    </message>
+    <message>
+        <source>Not a valid UUID - {}</source>
+        <translation type="vanished">UUID non valide - {}</translation>
+    </message>
+    <message>
+        <source>Recovered - {} - {}</source>
+        <translation type="vanished">Récupéré - {} - {}</translation>
+    </message>
+    <message>
+        <source>Found - {} - {}</source>
+        <translation type="vanished">Trouvé - {} - {}</translation>
+    </message>
+    <message>
+        <source>Skipping lost story (seems broken/incomplete) - {} - {}</source>
+        <translation type="vanished">On ignore cette histoire (semble corrompue ou incomplète) - {} - {}</translation>
+    </message>
+    <message>
+        <source>Already in list but invalid - {} - {}</source>
+        <translation type="vanished">Déjà dans la liste, mais invalide - {} - {}</translation>
+    </message>
+    <message>
+        <source>Already in list - {} - {}</source>
+        <translation type="vanished">Déjà dans la liste - {} - {}</translation>
+    </message>
+    <message>
+        <source>Deleting - {}</source>
+        <translation type="vanished">Supression - {}</translation>
+    </message>
+    <message>
+        <source>Failed to delete - {}</source>
+        <translation type="vanished">Impossible de supprimer - {}</translation>
+    </message>
+    <message>
+        <source>Importing {} archives...</source>
+        <translation type="vanished">Import de {} archives...</translation>
+    </message>
+    <message>
+        <source>🚧 Loading {}...</source>
+        <translation type="vanished">🚧 Chargement de {}...</translation>
+    </message>
+    <message>
+        <source>Not enough space left on Lunii (only {}MB)</source>
+        <translation type="vanished">Pas assez de place restant sur la Lunii (reste {}Mo)</translation>
+    </message>
+    <message>
+        <source>No UUID file found in archive. Unable to add this story.</source>
+        <translation type="vanished">Fichier UUID introuvable dans l&apos;archive. Impossible de charger cette histoire.</translation>
+    </message>
+    <message>
+        <source>&apos;{}&apos; is already loaded !</source>
+        <translation type="vanished">&apos;{}&apos; est déjà chargée !</translation>
+    </message>
+    <message>
+        <source>Import aborted, performing cleanup on current story...</source>
+        <translation type="vanished">Chargement interrompu, nettoyage en cours...</translation>
+    </message>
+    <message>
+        <source>Archive seems to be a STUdio story (Lunii story expected).</source>
+        <translation type="vanished">Cette archive semble être une histoire STUdio (attendu une histoire Lunii)</translation>
+    </message>
+    <message>
+        <source>UUID parse error {}</source>
+        <translation type="vanished">Erreur de lecture de l&apos;UUID {}</translation>
+    </message>
+    <message>
+        <source>UUID directory is missing in archive !</source>
+        <translation type="vanished">L&apos;archive ne contient pas le dossier UUID !</translation>
+    </message>
+    <message>
+        <source>File {}/{} &gt; {}</source>
+        <translation type="vanished">Fichier {}/{} &gt; {}</translation>
+    </message>
+    <message>
+        <source>unsupported story format</source>
+        <translation type="vanished">Format d&apos;histoire non supporté</translation>
+    </message>
+    <message>
+        <source>plain.pk format detected ! Unable to add this story.</source>
+        <translation type="vanished">Format plain.pk détecté, au lieu de STUdio ! Impossible de charger cette histoire.</translation>
+    </message>
+    <message>
+        <source>missing &apos;story.json&apos;. Unable to add this story.</source>
+        <translation type="vanished">Fichier &apos;story.json&apos; manquant. Impossible de charger cette histoire.</translation>
+    </message>
+    <message>
+        <source>STUdio story with non MP3 audio file. You need FFMPEG tool to import such kind of story, refer to README.md</source>
+        <translation type="vanished">Histoire STUdio avec des audio non MP3. L&apos;outil FFMPEG est nécessaire pour ce type d&apos;histoire, consulter README.md</translation>
+    </message>
+    <message>
+        <source>⌛ Transcoding audio {} : {} KB ...</source>
+        <translation type="vanished">⌛ Transcodage audio {} : {} Ko ...</translation>
+    </message>
+    <message>
+        <source>⌛ Removing tags from audio {}</source>
+        <translation type="vanished">⌛ Suppression des tags de l&apos;audio {}</translation>
+    </message>
+    <message>
+        <source>Night mode file creation...</source>
+        <translation type="vanished">Création du fichier Mode Nuit...</translation>
+    </message>
+    <message>
+        <source>at least {} match your pattern. Try a longer UUID.</source>
+        <translation type="vanished">au moins {} correspondances trouvées. Essayez avec un bout d&apos;UUID plus long.</translation>
+    </message>
+    <message>
+        <source>🚧 Exporting {} - {}</source>
+        <translation type="vanished">🚧 Export de {} - {}</translation>
+    </message>
+    <message>
+        <source>Lunii v3 requires Device Key for genuine story export.</source>
+        <translation type="vanished">Une Lunii v3 nécessite des clés de l&apos;appareil pour exporter une histoire.</translation>
+    </message>
+    <message>
+        <source>&gt; Zipping story ...</source>
+        <translation type="vanished">&gt; Compression de l&apos;histoire ...</translation>
+    </message>
+    <message>
+        <source>&gt; Adding UUID ...</source>
+        <translation type="vanished">&gt; Ajout de l&apos;UUID ...</translation>
+    </message>
+    <message>
+        <source>&gt; Adding thumbnail ...</source>
+        <translation type="vanished">&gt; Ajout de la vignette ...</translation>
+    </message>
+    <message>
+        <source>&gt; Adding metadata ...</source>
+        <translation type="vanished">&gt; Ajout des metadata ...</translation>
+    </message>
+    <message>
+        <source>failed to create ZIP - {}</source>
+        <translation type="vanished">Erreur pendant la création du ZIP - {}</translation>
+    </message>
+    <message>
+        <source>🚧 Removing {} - {}...</source>
+        <translation type="vanished">🚧 Suppresion {} - {}...</translation>
+    </message>
+    <message>
+        <source>Found duplicate story, cleaning...</source>
+        <translation type="vanished">Histoire dupliquée identifiée, nettoyage...</translation>
+    </message>
+    <message>
+        <source>Read {} {}stories</source>
+        <translation type="vanished">{} histoires lues</translation>
+    </message>
+    <message>
+        <source>Reading Lunii loaded stories...</source>
+        <translation type="vanished">Lecture des histoires chargées dans la Lunii</translation>
+    </message>
+    <message>
+        <source>Config file not found, using default values</source>
+        <translation type="vanished">Fichier de configuration manquant, utilisation des valeurs par défaut</translation>
+    </message>
+    <message>
+        <source>🛑 Unsupported config version {}, using default values</source>
+        <translation type="vanished">🛑 Version du fichier de configuration non supporté {}, utilisation des valeurs par défaut</translation>
+    </message>
+    <message>
+        <source>Reading Lunii config...</source>
+        <translation type="vanished">Lecture de la configuration de la Lunii</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../pkg/ui/main.ui" line="20"/>
@@ -124,12 +554,12 @@ Les logos sont fournis par &lt;b&gt;malexxx&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
         <translation>Lunii Qt-Manager</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="201"/>
+        <location filename="../pkg/ui/main.ui" line="211"/>
         <source>My Lunii</source>
         <translation>Ma Lunii</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="573"/>
+        <location filename="../pkg/ui/main.ui" line="412"/>
         <source>Official Store</source>
         <translation>Source Officielle</translation>
     </message>
@@ -142,158 +572,194 @@ Les logos sont fournis par &lt;b&gt;malexxx&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
         <translation type="vanished">Installée</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="763"/>
+        <location filename="../pkg/ui/main.ui" line="605"/>
+        <location filename="../pkg/ui/main.ui" line="809"/>
         <source>Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="804"/>
+        <location filename="../pkg/ui/main.ui" line="628"/>
+        <source>Third Party Store</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/ui/main.ui" line="665"/>
+        <source>(Third Party Story Library path)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/ui/main.ui" line="868"/>
         <source>Add Story</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="811"/>
+        <location filename="../pkg/ui/main.ui" line="875"/>
         <source>Remove Story</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="926"/>
+        <location filename="../pkg/ui/main.ui" line="924"/>
+        <source>Operation progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/ui/main.ui" line="950"/>
+        <source>Writing speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/ui/main.ui" line="980"/>
+        <source>Story progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/ui/main.ui" line="1005"/>
+        <source>File progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/ui/main.ui" line="1151"/>
         <source>Exit</source>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="944"/>
+        <location filename="../pkg/ui/main.ui" line="1169"/>
         <source>Import</source>
         <translation>Importer</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="956"/>
+        <location filename="../pkg/ui/main.ui" line="1181"/>
         <source>Export</source>
         <translation>Exporter</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="968"/>
+        <location filename="../pkg/ui/main.ui" line="1193"/>
         <source>Export All</source>
         <translation>Tout Exporter</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="980"/>
+        <location filename="../pkg/ui/main.ui" line="1205"/>
         <source>Move Up</source>
         <translation>Déplacer vers le haut</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="992"/>
+        <location filename="../pkg/ui/main.ui" line="1217"/>
         <source>Move Down</source>
         <translation>Déplacer vers le bas</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1004"/>
-        <location filename="../pkg/ui/main.ui" line="1149"/>
+        <location filename="../pkg/ui/main.ui" line="1229"/>
+        <location filename="../pkg/ui/main.ui" line="1377"/>
         <source>Remove</source>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1021"/>
+        <location filename="../pkg/ui/main.ui" line="1246"/>
         <source>Show size</source>
         <translation>Afficher les tailles</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1024"/>
+        <location filename="../pkg/ui/main.ui" line="1249"/>
         <source>Show size for each stories</source>
         <translation>Afficher les tailles pour chaques histoires</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1036"/>
+        <location filename="../pkg/ui/main.ui" line="1261"/>
         <source>Get FW Update</source>
         <translation>Récupérer le firmware</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1039"/>
+        <location filename="../pkg/ui/main.ui" line="1264"/>
         <source>Get firmaware update for current Lunii</source>
         <translation>Récupérer la mise à jour du firmware pour la Lunii connectée</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1050"/>
-        <source>Show story details</source>
-        <translation>Détails des histoires</translation>
+        <location filename="../pkg/ui/main.ui" line="1275"/>
+        <location filename="../pkg/ui/main.ui" line="1278"/>
+        <source>Show unavailable stories</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1059"/>
+        <source>Show story details</source>
+        <translation type="vanished">Détails des histoires</translation>
+    </message>
+    <message>
+        <location filename="../pkg/ui/main.ui" line="1287"/>
         <source>Move Top</source>
         <translation>Déplacer en haut</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1071"/>
+        <location filename="../pkg/ui/main.ui" line="1299"/>
         <source>Move Bottom</source>
         <translation>Déplacer en bas</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1083"/>
+        <location filename="../pkg/ui/main.ui" line="1311"/>
         <source>Open device</source>
         <translation>Ouvrir</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1086"/>
+        <location filename="../pkg/ui/main.ui" line="1314"/>
         <source>Open Lunii or Flam device</source>
         <translation>Ouvre une Lunii ou une Flam</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1101"/>
+        <location filename="../pkg/ui/main.ui" line="1329"/>
         <source>Show Log</source>
         <translation>Afficher le journal</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1113"/>
+        <location filename="../pkg/ui/main.ui" line="1341"/>
         <source>About</source>
         <translation>A propos</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1125"/>
+        <location filename="../pkg/ui/main.ui" line="1353"/>
         <source>Update to v2.X.X</source>
         <translation>Mise à jour vers v2.X.X</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1139"/>
+        <location filename="../pkg/ui/main.ui" line="1367"/>
         <source>FFMPEG detected</source>
         <translation>FFMPEG détecté</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1144"/>
+        <location filename="../pkg/ui/main.ui" line="1372"/>
         <source>Recover</source>
         <translation>Récupérer</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1157"/>
+        <location filename="../pkg/ui/main.ui" line="1385"/>
         <source>Factory Reset</source>
         <translation>Réinitialisation</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1162"/>
+        <location filename="../pkg/ui/main.ui" line="1390"/>
         <source>Find</source>
         <translation>Rechercher</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1167"/>
+        <location filename="../pkg/ui/main.ui" line="1395"/>
         <source>Hide / Show</source>
         <translation>Cacher / Montrer</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1179"/>
+        <location filename="../pkg/ui/main.ui" line="1407"/>
         <source>Import STUdio DB</source>
         <translation>Importer une DB STUdio</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1188"/>
+        <location filename="../pkg/ui/main.ui" line="1416"/>
         <source>Refresh official DB</source>
         <translation>Rafraichir la DB officielle</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="1193"/>
+        <location filename="../pkg/ui/main.ui" line="1421"/>
         <source>Force Night Mode</source>
         <translation>Force le mode nuit</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="273"/>
+        <location filename="../pkg/ui/main.ui" line="289"/>
         <source>Night Mode</source>
         <translation>Mode nuit</translation>
     </message>
@@ -305,8 +771,8 @@ Les logos sont fournis par &lt;b&gt;malexxx&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
     <message>
         <location filename="../pkg/ui/main.ui" line="82"/>
         <location filename="../pkg/ui/main.ui" line="88"/>
-        <location filename="../pkg/main_window.py" line="404"/>
-        <location filename="../pkg/main_window.py" line="416"/>
+        <location filename="../pkg/main_window.py" line="465"/>
+        <location filename="../pkg/main_window.py" line="477"/>
         <source>Select your Lunii</source>
         <translation>Sélectionner votre Lunii</translation>
     </message>
@@ -321,215 +787,232 @@ Les logos sont fournis par &lt;b&gt;malexxx&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
         <translation>Forcer la base officielle Lunii a être rechargée</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="297"/>
+        <location filename="../pkg/ui/main.ui" line="313"/>
+        <location filename="../pkg/ui/main.ui" line="615"/>
+        <location filename="../pkg/ui/main.ui" line="819"/>
         <source>Size</source>
         <translation>Taille</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="265"/>
-        <location filename="../pkg/ui/main.ui" line="745"/>
+        <location filename="../pkg/ui/main.ui" line="281"/>
+        <location filename="../pkg/ui/main.ui" line="587"/>
+        <location filename="../pkg/ui/main.ui" line="799"/>
         <source>Story Name</source>
         <translation>Nom de l&apos;histoire</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="284"/>
+        <location filename="../pkg/ui/main.ui" line="300"/>
         <source>Database source (Official / Third Party)</source>
         <translation>Base d&apos;origine (Officielle / Tierce)</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="410"/>
+        <location filename="../pkg/ui/main.ui" line="908"/>
         <source>Total</source>
         <translation>Total</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="485"/>
+        <location filename="../pkg/ui/main.ui" line="1027"/>
         <source>Abort current process</source>
         <translation>Annuler la tâche en cours</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="532"/>
         <source>No Thumb</source>
-        <translation>Pas d&apos;image</translation>
+        <translation type="vanished">Pas d&apos;image</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="548"/>
         <source>Story description</source>
-        <translation>Description de l&apos;histoire</translation>
+        <translation type="vanished">Description de l&apos;histoire</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="588"/>
+        <location filename="../pkg/ui/main.ui" line="427"/>
+        <location filename="../pkg/ui/main.ui" line="639"/>
         <source>List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="598"/>
+        <location filename="../pkg/ui/main.ui" line="437"/>
+        <location filename="../pkg/ui/main.ui" line="649"/>
         <source>Gallery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="614"/>
+        <location filename="../pkg/ui/main.ui" line="453"/>
         <source>(Local Story Library path)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="639"/>
+        <location filename="../pkg/ui/main.ui" line="478"/>
+        <location filename="../pkg/ui/main.ui" line="690"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="737"/>
+        <location filename="../pkg/ui/main.ui" line="579"/>
+        <location filename="../pkg/ui/main.ui" line="791"/>
         <source>Age</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="750"/>
+        <location filename="../pkg/ui/main.ui" line="592"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="758"/>
+        <location filename="../pkg/ui/main.ui" line="600"/>
+        <location filename="../pkg/ui/main.ui" line="804"/>
         <source>Installation Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="846"/>
+        <location filename="../pkg/ui/main.ui" line="1071"/>
         <source>&amp;File</source>
         <translation>&amp;Fichier</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="864"/>
+        <location filename="../pkg/ui/main.ui" line="1089"/>
         <source>&amp;Tools</source>
         <translation>&amp;Outils</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="868"/>
+        <location filename="../pkg/ui/main.ui" line="1093"/>
         <source>Lost stories</source>
         <translation>Histoires perdues</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="887"/>
+        <location filename="../pkg/ui/main.ui" line="1112"/>
         <source>&amp;Stories</source>
         <translation>&amp;Histoires</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="907"/>
+        <location filename="../pkg/ui/main.ui" line="1132"/>
         <source>Update 2.2.X is released</source>
         <translation>Mise à jour v2.X.X disponible</translation>
     </message>
     <message>
-        <location filename="../pkg/ui/main.ui" line="912"/>
+        <location filename="../pkg/ui/main.ui" line="1137"/>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="424"/>
+        <location filename="../pkg/main_window.py" line="485"/>
         <source>No Lunii detected 😥, try File/Open</source>
         <translation>Aucune Lunii détectée 😥, essayer Fichier/Ouvrir</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="425"/>
+        <location filename="../pkg/main_window.py" line="486"/>
         <source>No Lunii detected 😥</source>
         <translation>Aucune Lunii détectée 😥</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="468"/>
+        <location filename="../pkg/main_window.py" line="529"/>
         <source>🛑 PermissionError : Unable to open this device</source>
         <translation>🛑 PermissionError : Impossible d&apos;ouvrir cet appareil</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="508"/>
-        <location filename="../pkg/main_window.py" line="525"/>
+        <location filename="../pkg/main_window.py" line="569"/>
+        <location filename="../pkg/main_window.py" line="586"/>
+        <location filename="../pkg/main_window.py" line="598"/>
         <source>Removing story &apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="511"/>
-        <location filename="../pkg/main_window.py" line="528"/>
+        <location filename="../pkg/main_window.py" line="572"/>
+        <location filename="../pkg/main_window.py" line="589"/>
+        <location filename="../pkg/main_window.py" line="601"/>
         <source>Importing story &apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="616"/>
         <source>Failed to fetch BMP file.</source>
-        <translation>Echec durant la récupération de l&apos;image</translation>
+        <translation type="vanished">Echec durant la récupération de l&apos;image</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="619"/>
+        <location filename="../pkg/main_window.py" line="702"/>
         <source>Fetching official Lunii DB...</source>
         <translation>Récupération de la base officielle Lunii</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="637"/>
+        <location filename="../pkg/main_window.py" line="725"/>
         <source>👍 Lunii DB refreshed.</source>
         <translation>👍 Lunii DB récupérée.</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="639"/>
+        <location filename="../pkg/main_window.py" line="727"/>
         <source>🛑 Lunii DB failed.</source>
         <translation>🛑 Erreur Lunii DB.</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="645"/>
+        <location filename="../pkg/main_window.py" line="739"/>
+        <source>⚠️ Failed to extract UUID from </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/main_window.py" line="747"/>
+        <source>⚠️ Failed to rename &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/main_window.py" line="759"/>
         <source>Device info sent to clipboard.</source>
         <translation>Information copiées dans le presse papier.</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="655"/>
+        <location filename="../pkg/main_window.py" line="769"/>
         <source>Open Lunii device</source>
         <translation>Ouvrir un appareil</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="662"/>
+        <location filename="../pkg/main_window.py" line="776"/>
         <source>Not a Lunii, nor Flam or unsupported one 😥</source>
         <translation>Ni une Lunii, ni une Flam, ou alors non reconnue 😥</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="674"/>
+        <location filename="../pkg/main_window.py" line="788"/>
         <source>Open STUdio DB</source>
         <translation>Ouvrir une base STUdio</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="748"/>
+        <location filename="../pkg/main_window.py" line="858"/>
         <source>⚠️ Login failed, please check your credentials</source>
         <translation>⚠️ Echec de l&apos;identification, vérifiez vos informations</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="750"/>
+        <location filename="../pkg/main_window.py" line="860"/>
         <source>Login success...</source>
         <translation>Identifié....</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="774"/>
+        <location filename="../pkg/main_window.py" line="884"/>
         <source>✅ Firmware downloaded to</source>
         <translation>✅ Firmware téléchargé dans</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="776"/>
+        <location filename="../pkg/main_window.py" line="886"/>
         <source>🛑 Fail to download update</source>
         <translation>🛑 Echec du téléchargement de la mise à jour</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="782"/>
+        <location filename="../pkg/main_window.py" line="892"/>
         <source>🛑 Network error...</source>
         <translation>🛑 Erreur reseau...</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="874"/>
+        <location filename="../pkg/main_window.py" line="984"/>
         <source>Latest Github release</source>
         <translation>Dernière mise à jour Github</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="876"/>
+        <location filename="../pkg/main_window.py" line="986"/>
         <source>🛑 Unable to fetch version from Github</source>
         <translation>🛑 Impossible de récupérer l&apos;information de la dernière version sur Github</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="900"/>
+        <location filename="../pkg/main_window.py" line="1010"/>
         <source>[ Help ]</source>
         <translation>[ Aide ]</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="901"/>
+        <location filename="../pkg/main_window.py" line="1011"/>
         <source>Update is available</source>
         <translation>Mise à jour disponible</translation>
     </message>
@@ -538,7 +1021,7 @@ Les logos sont fournis par &lt;b&gt;malexxx&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
         <translation type="vanished">Mise à jour est disponible</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="902"/>
+        <location filename="../pkg/main_window.py" line="1012"/>
         <source>Update to {}</source>
         <translation>Mettre à jour en {}</translation>
     </message>
@@ -547,39 +1030,65 @@ Les logos sont fournis par &lt;b&gt;malexxx&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
         <translation type="vanished">Mettre à jour vers {last_version}</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="964"/>
+        <location filename="../pkg/main_window.py" line="1074"/>
         <source>Story is hidden for LuniiStore synchronization</source>
         <translation>Histoire masquée pour une synchronisation LuniiStore</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="970"/>
+        <location filename="../pkg/main_window.py" line="1080"/>
         <source>Open Local DB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="1078"/>
+        <location filename="../pkg/main_window.py" line="1096"/>
+        <source>Open Third Party Local DB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/main_window.py" line="1207"/>
+        <source>Failed to associated local file to story &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/main_window.py" line="1209"/>
+        <location filename="../pkg/main_window.py" line="1211"/>
+        <source>Local file &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/main_window.py" line="1310"/>
+        <source>Disponible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/main_window.py" line="1325"/>
+        <source>Sur la Lunii</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/main_window.py" line="1336"/>
         <source>Free :</source>
         <translation>Libre :</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="1159"/>
+        <location filename="../pkg/main_window.py" line="1417"/>
         <source>stories</source>
         <translation>histoires</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="1268"/>
+        <location filename="../pkg/main_window.py" line="1526"/>
         <source>Delete stories</source>
         <translation>Supprimer les histoires</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="1270"/>
+        <location filename="../pkg/main_window.py" line="1528"/>
         <source>You are requesting to delete : 
 </source>
         <translation>Souhaitez vous supprimer : 
 </translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="1277"/>
+        <location filename="../pkg/main_window.py" line="1535"/>
         <source>
 (and too many others)
 </source>
@@ -588,46 +1097,53 @@ Les logos sont fournis par &lt;b&gt;malexxx&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
 </translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="1278"/>
+        <location filename="../pkg/main_window.py" line="1536"/>
         <source>
 Do you want to proceed ?</source>
         <translation>
 Voulez-vous continuer ?</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="1304"/>
+        <location filename="../pkg/main_window.py" line="1562"/>
         <source>🛑 Export cancelled</source>
         <translation>🛑 Export annulé</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="1322"/>
+        <location filename="../pkg/main_window.py" line="1580"/>
         <source>🛑 Export All cancelled</source>
         <translation>🛑 Tout exporter annulé</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="1359"/>
-        <location filename="../pkg/main_window.py" line="1402"/>
+        <location filename="../pkg/main_window.py" line="1615"/>
+        <location filename="../pkg/main_window.py" line="1628"/>
+        <location filename="../pkg/main_window.py" line="1635"/>
+        <source>🛑 Unable to update story ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/main_window.py" line="1653"/>
+        <location filename="../pkg/main_window.py" line="1696"/>
         <source>✅ Stories updated...</source>
         <translation>✅ Histoire(s) mise(s) à jour</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="1412"/>
+        <location filename="../pkg/main_window.py" line="1703"/>
         <source>Open Stories</source>
         <translation>Ouvrir une histoire</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="1417"/>
-        <location filename="../pkg/main_window.py" line="1453"/>
+        <location filename="../pkg/main_window.py" line="1708"/>
+        <location filename="../pkg/main_window.py" line="1744"/>
         <source>Importing stories...</source>
         <translation>Import d&apos;histoires</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="1447"/>
+        <location filename="../pkg/main_window.py" line="1738"/>
         <source>🛑 Unable to import story, missing story key for Lunii v3</source>
         <translation>🛑 Impossible d&apos;importer des histroires, pas de clés histoires pour la Lunii v3</translation>
     </message>
     <message>
-        <location filename="../pkg/main_window.py" line="1516"/>
+        <location filename="../pkg/main_window.py" line="1837"/>
         <source>Abort requested, please wait...</source>
         <translation>Annulation demandée, patientez...</translation>
     </message>
@@ -637,6 +1153,17 @@ Voulez-vous continuer ?</translation>
     <message>
         <source>Night mode settings</source>
         <translation type="vanished">Confguration du mode nuit</translation>
+    </message>
+</context>
+<context>
+    <name>device_flam</name>
+    <message>
+        <source>Deleting - {}</source>
+        <translation type="obsolete">Supression - {}</translation>
+    </message>
+    <message>
+        <source>Failed to delete - {}</source>
+        <translation type="obsolete">Impossible de supprimer - {}</translation>
     </message>
 </context>
 <context>
@@ -658,107 +1185,120 @@ Voulez-vous continuer ?</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="102"/>
+        <location filename="../pkg/ierWorker.py" line="94"/>
+        <source>😮‍💨 This process is veeeeeeeeery long due to Flam firmware. 😴 Be patient ...</source>
+        <translation>😮‍💨 Cette opération est très loooooooongue à cause de la Flam 😴 Soyez patient ...</translation>
+    </message>
+    <message>
+        <location filename="../pkg/ierWorker.py" line="95"/>
+        <source>Importing stories...</source>
+        <translation>Import d&apos;histoires</translation>
+    </message>
+    <message>
+        <location filename="../pkg/ierWorker.py" line="114"/>
+        <source>Time to import : {}</source>
+        <translation>Durée de l&apos;import : {}</translation>
+    </message>
+    <message>
+        <location filename="../pkg/ierWorker.py" line="115"/>
         <source>👍 New story imported : &apos;{}&apos;</source>
         <translation>👍 Nouvelle histoire importée : &apos;{}&apos;</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="106"/>
+        <location filename="../pkg/ierWorker.py" line="119"/>
         <source>🛑 Failed to import : &apos;{}&apos;</source>
         <translation>🛑 Echec de l&apos;import : &apos;{}&apos;</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="121"/>
+        <location filename="../pkg/ierWorker.py" line="134"/>
         <source>✅ Import done : {}/{}</source>
         <translation>✅ Import terminé : {}/{}</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="135"/>
         <source>🛑 Forbidden to export : &apos;{}&apos;</source>
-        <translation>🛑 Export interdit pour : &apos;{}&apos;</translation>
+        <translation type="vanished">🛑 Export interdit pour : &apos;{}&apos;</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="143"/>
+        <location filename="../pkg/ierWorker.py" line="156"/>
         <source>👍 Story exported to &apos;{}&apos;</source>
         <translation>👍 Histoire exportée vers &apos;{}&apos;</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="147"/>
+        <location filename="../pkg/ierWorker.py" line="160"/>
         <source>🛑 Failed to export : &apos;{}&apos;</source>
         <translation>🛑 Echec de l&apos;export : &apos;{}&apos;</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="157"/>
+        <location filename="../pkg/ierWorker.py" line="170"/>
         <source>✅ Export done : {}/{}</source>
         <translation>✅ Export terminé : {}/{}</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="172"/>
+        <location filename="../pkg/ierWorker.py" line="185"/>
         <source>👍 Story removed: &apos;{}&apos;</source>
         <translation>👍 Histoire supprimée : &apos;{}&apos;</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="176"/>
+        <location filename="../pkg/ierWorker.py" line="189"/>
         <source>🛑 Failed to remove : &apos;{}&apos;</source>
         <translation>🛑 Impossible de supprimer : &apos;{}&apos;</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="186"/>
+        <location filename="../pkg/ierWorker.py" line="199"/>
         <source>✅ {} stories removed</source>
         <translation>✅ {} histoires supprimées</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="221"/>
+        <location filename="../pkg/ierWorker.py" line="243"/>
         <source>✅ Stories parsed, sizes updated</source>
         <translation>✅ Histoires analysées, tailles mises à jour</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="224"/>
+        <location filename="../pkg/ierWorker.py" line="246"/>
         <source>🚧 Analyzing storage ...</source>
         <translation>🚧 En cours d&apos;analyse ...</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="232"/>
+        <location filename="../pkg/ierWorker.py" line="254"/>
         <source>✅ Storage parsed, {} lost stories {}</source>
         <translation>✅ Appareil analysé, {} histoires perdues {}</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="232"/>
+        <location filename="../pkg/ierWorker.py" line="254"/>
         <source>found (try to recover them)</source>
         <translation>trouvées (essayez de les récupérer)</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="232"/>
+        <location filename="../pkg/ierWorker.py" line="254"/>
         <source>recovered</source>
         <translation>récupérées</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="242"/>
+        <location filename="../pkg/ierWorker.py" line="264"/>
         <source>✅ Storage parsed, {} lost stories removed, {} MB recovered</source>
         <translation>✅ Appareil analysé, {} histoires perdues supprimées, {} Mo récupérés</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="312"/>
+        <location filename="../pkg/ierWorker.py" line="334"/>
         <source>✅ STUdio DB imported ({}/{}).</source>
         <translation>✅ Base STUdio importée ({}/{}).</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="236"/>
+        <location filename="../pkg/ierWorker.py" line="258"/>
         <source>🚧 Cleaning storage ...</source>
         <translation>🚧 Nettoyage de l&apos;appareil ...</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="101"/>
         <source>Time to import : {}s</source>
-        <translation>Temps pour importer : {}s</translation>
+        <translation type="vanished">Temps pour importer : {}s</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="252"/>
+        <location filename="../pkg/ierWorker.py" line="274"/>
         <source>✅ Factory reset performed, device is empty</source>
         <translation>✅ Retour usine effectué, l&apos;appareil est désormais vide</translation>
     </message>
     <message>
-        <location filename="../pkg/ierWorker.py" line="267"/>
+        <location filename="../pkg/ierWorker.py" line="289"/>
         <source>🛑 Failed to import DB (wrong file ?)</source>
         <translation>🛑 Eched de l&apos;import de la base (mauvais fichier ?)</translation>
     </message>

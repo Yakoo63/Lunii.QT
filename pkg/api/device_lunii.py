@@ -2,6 +2,7 @@ import glob
 import json
 import shutil
 from string import hexdigits
+import time
 import zipfile
 import psutil
 import py7zr
@@ -13,6 +14,7 @@ from uuid import UUID
 
 from Crypto.Cipher import AES
 from PySide6 import QtCore
+from PySide6.QtCore import QCoreApplication
 
 from pkg.api.aes_keys import fetch_keys, reverse_bytes
 from pkg.api.constants import *
@@ -24,8 +26,10 @@ from pkg.api.stories import FILE_META, FILE_STUDIO_JSON, FILE_STUDIO_THUMB, FILE
 
 class LuniiDevice(QtCore.QObject):
     STORIES_BASEDIR = ".content/"
+    HIDDEN_STORIES_BASEDIR = ".content.hidden/"
 
     signal_story_progress = QtCore.Signal(str, int, int)
+    signal_file_progress = QtCore.Signal(str, int, int)
     signal_logger = QtCore.Signal(int, str)
     stories: StoryList
 
@@ -73,7 +77,7 @@ class LuniiDevice(QtCore.QObject):
 
     def story_dir(self, short_uuid):
         if short_uuid not in self.stories:
-            self.signal_logger.emit(logging.ERROR, "This story is not present on your storyteller")
+            self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "This story is not present on your storyteller"))
             return None
         return os.path.join(self.mount_point, self.STORIES_BASEDIR, short_uuid)
 
@@ -150,7 +154,7 @@ class LuniiDevice(QtCore.QObject):
         # checking if md backup file is available 
         V3_MD = os.path.join(CFG_DIR, f"{self.snu_str}.v{md_vers:d}.md")
         if not os.path.isfile(V3_MD):
-            logger.log(logging.INFO, f"No backup of v{md_vers:d} metadata file found, creating one...")
+            logger.log(logging.INFO, QCoreApplication.translate("LuniiDevice", "No backup of v{:d} metadata file found, creating one...").format(md_vers))
             # creating backup of md file
             with open(V3_MD, "wb") as fp_md_bak:
                 fp_md.seek(0)
@@ -159,13 +163,13 @@ class LuniiDevice(QtCore.QObject):
         # getting candidated for story bt file
         fp_md.seek(0x40)
         if md_vers == 6:
-            logger.log(logging.DEBUG, f"Forging story keys for v6 metadata file")
+            logger.log(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "Forging story keys for v6 metadata file"))
             # forging bt file based on ciphered part of md
             self.bt = fp_md.read(0x20)
             # forging keys based on plain part of md (SNU x2)
             self.load_md_fakestory_keys()
         else:
-            logger.log(logging.DEBUG, f"Forging story keys for v7+ metadata file")
+            logger.log(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "Forging story keys for v7+ metadata file"))
             # forging keys based on md ciphered part
             self.story_key = reverse_bytes(fp_md.read(0x10))
             self.story_iv = reverse_bytes(fp_md.read(0x10))
@@ -179,7 +183,7 @@ class LuniiDevice(QtCore.QObject):
 
         vid, pid = FAH_V2_V3_USB_VID_PID
         if self.device_key:
-            logger.log(logging.INFO, f"v3 key file read from {self.dev_keyfile}")
+            logger.log(logging.INFO, QCoreApplication.translate("LuniiDevice", "v3 key file read from {}").format(self.dev_keyfile))
         logger.log(logging.DEBUG, f"\n"
                                        f"SNU : {self.snu_str}\n"
                                        f"HW  : v3\n"
@@ -197,21 +201,21 @@ class LuniiDevice(QtCore.QObject):
         #checking for md file
         V3_MD = os.path.join(CFG_DIR, f"{self.snu_str}.v{version}.md")
         if os.path.isfile(V3_MD):
-            logger.log(logging.INFO, f".md v{version} file found ({V3_MD})")
+            logger.log(logging.INFO, QCoreApplication.translate("LuniiDevice", ".md v{:d} file found ({})").format(version, V3_MD))
 
             with open(V3_MD, "rb") as fp_md:
                 # reading version as first 2 bytes
                 md_version = int.from_bytes(fp_md.read(2), 'little')
                 # ensure version is the expected one
                 if md_version != version:
-                    logger.log(logging.WARNING, f".md file is not v{version} ({V3_MD})")
+                    logger.log(logging.WARNING, QCoreApplication.translate("LuniiDevice", ".md file is not v{:d} ({})").format(version, V3_MD))
                 else:
                     # ensure that SNU in md is the same as seleced device
                     fp_md.seek(0x1A)
                     md_snu = binascii.unhexlify(fp_md.read(14).decode('utf-8'))
                     
                     if md_snu != self.snu:
-                        logger.log(logging.WARNING, f".md file SNU mismatch ({binascii.hexlify(md_snu)} vs. {binascii.hexlify(self.snu)})")
+                        logger.log(logging.WARNING, QCoreApplication.translate("LuniiDevice", ".md file SNU mismatch ({}) vs. ({})").format(binascii.hexlify(md_snu), binascii.hexlify(self.snu)))
                     else:
                         # metadata file validated, we can setup keys
                         fp_md.seek(0x40)
@@ -228,7 +232,7 @@ class LuniiDevice(QtCore.QObject):
                             self.bt = binascii.hexlify(self.snu) + b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" + binascii.hexlify(self.snu)[:8]
 
         else:
-            logger.log(logging.WARNING, f"no .md v{version} file found ({V3_MD})")
+            logger.log(logging.WARNING, QCoreApplication.translate("LuniiDevice", "no .md v{:d} file found ({})").format(version, V3_MD))
 
 
     def __unsupported_md_parse(self, fp_md):
@@ -251,9 +255,9 @@ class LuniiDevice(QtCore.QObject):
             self.snu = binascii.unhexlify(fp_md.read(14).decode('utf-8'))
         except (EOFError, binascii.Error):
             self.snu = b'\x00' * 16
-            logger.log(logging.ERROR, f"🛑 corrupted metadata file ? (maybe SD corruption)")
+            logger.log(logging.ERROR, QCoreApplication.translate("LuniiDevice", "🛑 corrupted metadata file ? (maybe SD corruption)"))
 
-        logger.log(logging.WARNING, f"⚠️ Unsupported or corrupted metadata file v{md_vers}, checking for backups...")
+        logger.log(logging.WARNING, QCoreApplication.translate("LuniiDevice", "⚠️ Unsupported or corrupted metadata file v{:d}, checking for backups...").format(md_vers))
 
         if not self.story_key:
             self.__load_mdbackup(6)
@@ -272,12 +276,12 @@ class LuniiDevice(QtCore.QObject):
             cipher = AES.new(self.device_key, AES.MODE_CBC, self.device_iv)
             self.bt = cipher.encrypt(buffer)
 
-            logger.log(logging.INFO, f"v3 key file read from {self.dev_keyfile}")
+            logger.log(logging.INFO, QCoreApplication.translate("LuniiDevice", "v3 key file read from {}").format(self.dev_keyfile))
         
         if self.story_key is None:
-            logger.log(logging.WARNING, f"🛑 no keys at all, unable to import stories. See README on Github for help.")
+            logger.log(logging.WARNING, QCoreApplication.translate("LuniiDevice", "🛑 no keys at all, unable to import stories. See README on Github for help."))
         else:
-            logger.log(logging.INFO, f"✅ story keys found, import supported.")
+            logger.log(logging.INFO, QCoreApplication.translate("LuniiDevice", "✅ story keys found, import supported."))
             
         vid, pid = FAH_V2_V3_USB_VID_PID
         logger.log(logging.DEBUG, f"\n"
@@ -467,7 +471,7 @@ class LuniiDevice(QtCore.QObject):
         expected_files = ["li", "ni", "ri", "si"]
         for pattern in expected_files:
             if not any(entry.lower().endswith(pattern) for entry in story_files):
-                self.signal_logger.emit(logging.WARN, f"Missing {pattern} in {story_path}")
+                self.signal_logger.emit(logging.WARN, QCoreApplication.translate("LuniiDevice", "Missing {} in {}").format(pattern, story_path))
                 return False
 
         # checking for bt file
@@ -483,7 +487,7 @@ class LuniiDevice(QtCore.QObject):
         # checking auth file (if possible) + fix
         if self.device_version <= LUNII_V2:
             if not self.__story_check_v2bt(Path(story_path)):
-                self.signal_logger.emit(logging.WARN, f"Bad authorization file bt in {story_path}")
+                self.signal_logger.emit(logging.WARN, QCoreApplication.translate("LuniiDevice", "Bad authorization file bt in {}").format(story_path))
 
                 # Fixing bt file
                 data_ri = b""
@@ -492,7 +496,7 @@ class LuniiDevice(QtCore.QObject):
                 self.bt = self.cipher(data_ri[0:0x40], self.device_key)
 
                 # creating authorization file : bt
-                self.signal_logger.emit(logging.INFO, "Authorization file creation...")
+                self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Authorization file creation..."))
                 with open(os.path.join(story_path, "bt"), "wb") as fp_bt:
                     fp_bt.write(self.bt)
 
@@ -501,7 +505,7 @@ class LuniiDevice(QtCore.QObject):
         expected_dirs = ["rf", "sf"]
         for pattern in expected_dirs:
             if not any(entry.lower().endswith(pattern) for entry in story_files):
-                self.signal_logger.emit(logging.WARN, f"Missing {pattern} in {story_path}")
+                self.signal_logger.emit(logging.WARN, QCoreApplication.translate("LuniiDevice", "Missing {} in {}").format(pattern, story_path))
                 return False
 
         try:
@@ -513,7 +517,7 @@ class LuniiDevice(QtCore.QObject):
                 res = res.replace('\\', '/')
                 res_path = os.path.join(story_path, "rf", res)
                 if not os.path.isfile(res_path):
-                    self.signal_logger.emit(logging.WARN, f"Missing rf/{res} in {story_path}")
+                    self.signal_logger.emit(logging.WARN, QCoreApplication.translate("LuniiDevice", "Missing rf/{} in {}").format(res, story_path))
                     return False
 
             # parsing si file - each resource must exist
@@ -524,30 +528,39 @@ class LuniiDevice(QtCore.QObject):
                 res = res.replace('\\', '/')
                 res_path = os.path.join(story_path, "sf", res)
                 if not os.path.isfile(res_path):
-                    self.signal_logger.emit(logging.WARN, f"Missing sf/{res} in {story_path}")
+                    self.signal_logger.emit(logging.WARN, QCoreApplication.translate("LuniiDevice", "Missing sf/{} in {}").format(res, story_path))
                     return False
         except UnicodeDecodeError:
-            self.signal_logger.emit(logging.WARN, f"Failed to decode ri or si file")
+            self.signal_logger.emit(logging.WARN, QCoreApplication.translate("LuniiDevice", "Failed to decode ri or si file"))
             return False
 
         # all requested files are there, including auth file ans resources
         return True
 
-    # try to recover lost stories from .content directory
+    # try to recover lost stories from .content and .content.hidden directory
     def recover_stories(self, dry_run: bool):
         recovered = 0
 
+        stories_uuid_found = []
         # getting all stories
         content_dir = os.path.join(self.mount_point, self.STORIES_BASEDIR)
         try:
-            stories_dir = [entry for entry in os.listdir(content_dir) if os.path.isdir(os.path.join(content_dir, entry))]
+            contents = [entry for entry in os.listdir(content_dir) if os.path.isdir(os.path.join(content_dir, entry))]
+            stories_uuid_found.extend(contents)
+            stories_active = [os.path.join(content_dir, entry) for entry in contents]
         except FileNotFoundError:
             return recovered
-        stories_dir.sort()
+        # getting all hidden stories
+        hidden_content_dir = os.path.join(self.mount_point, self.HIDDEN_STORIES_BASEDIR)
+        try:
+            stories_uuid_found.extend([entry for entry in os.listdir(hidden_content_dir) if os.path.isdir(os.path.join(hidden_content_dir, entry))])
+        except FileNotFoundError:
+            return recovered
+        stories_uuid_found.sort()
 
-        for index, story in enumerate(stories_dir):
+        for index, story in enumerate(stories_uuid_found):
             # directory is a partial UUID
-            self.signal_story_progress.emit(story, index, len(stories_dir))
+            self.signal_story_progress.emit(story, index, len(stories_uuid_found))
 
             str_uuid = None
             # looking complete UUID in official DB
@@ -564,11 +577,17 @@ class LuniiDevice(QtCore.QObject):
             try:
                 full_uuid = UUID(str_uuid)
             except (TypeError, ValueError) as e:
-                self.signal_logger.emit(logging.DEBUG, f"Not a valid UUID - {str_uuid}")
+                self.signal_logger.emit(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "Not a valid UUID - {}").format(str_uuid))
                 continue
 
-            one_story = Story(full_uuid)
-            story_dir = os.path.join(content_dir, story)
+            hidden = os.path.join(self.mount_point, self.STORIES_BASEDIR, story) not in stories_active
+            if hidden:
+                story_dir = os.path.join(hidden_content_dir, story)
+            else:
+                story_dir = os.path.join(content_dir, story)
+            # checking for night mode file
+            nm_file = os.path.isfile(os.path.join(story_dir, "nm"))
+            one_story = Story(full_uuid, hidden=hidden, nm=nm_file)
 
             if str_uuid not in self.stories:
                 # Lost Story
@@ -576,19 +595,19 @@ class LuniiDevice(QtCore.QObject):
 
                     # is it a dry run ?
                     if not dry_run:
-                        self.signal_logger.emit(logging.INFO, f"Recovered - {str(full_uuid).upper()} - {one_story.name}")
-                        self.stories.append(Story(full_uuid))
+                        self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Recovered - {} - {}").format(str(full_uuid).upper(), one_story.name))
+                        self.stories.append(one_story)
                     else:
-                        self.signal_logger.emit(logging.INFO, f"Found - {str(full_uuid).upper()} - {one_story.name}")
+                        self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Found - {} - {}").format(str(full_uuid).upper(), one_story.name))
                     recovered += 1
                 else:
-                    self.signal_logger.emit(logging.INFO, f"Skipping lost story (seems broken/incomplete) - {str(full_uuid).upper()} - {one_story.name}")
+                    self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Skipping lost story (seems broken/incomplete) - {} - {}").format(str(full_uuid).upper(), one_story.name))
             else:
                 # In DB story
                 if not self.__valid_story(story_dir):
-                    self.signal_logger.emit(logging.WARNING, f"Already in list but invalid - {str(full_uuid).upper()} - {one_story.name}")
+                    self.signal_logger.emit(logging.WARNING, QCoreApplication.translate("LuniiDevice", "Already in list but invalid - {} - {}").format(str(full_uuid).upper(), one_story.name))
                 else:
-                    self.signal_logger.emit(logging.DEBUG, f"Already in list - {str(full_uuid).upper()} - {one_story.name}")
+                    self.signal_logger.emit(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "Already in list - {} - {}").format(str(full_uuid).upper(), one_story.name))
 
         return recovered
 
@@ -596,18 +615,31 @@ class LuniiDevice(QtCore.QObject):
         removed = 0
         recovered_size = 0
 
+        stories_uuid_found = []
         # getting all stories
         content_dir = os.path.join(self.mount_point, self.STORIES_BASEDIR)
-        stories_dir = [entry for entry in os.listdir(content_dir) if os.path.isdir(os.path.join(content_dir, entry))]
+        contents = [entry for entry in os.listdir(content_dir) if os.path.isdir(os.path.join(content_dir, entry))]
+        stories_uuid_found.extend(contents)
+        stories_active = [os.path.join(content_dir, entry) for entry in contents]
 
-        for index, story in enumerate(stories_dir):
+        # getting all hidden stories
+        hidden_content_dir = os.path.join(self.mount_point, self.HIDDEN_STORIES_BASEDIR)
+        stories_uuid_found.extend([entry for entry in os.listdir(hidden_content_dir) if os.path.isdir(os.path.join(hidden_content_dir, entry))])
+        
+        stories_uuid_found.sort()
+
+        for index, story in enumerate(stories_uuid_found):
             # directory is a partial UUID
-            self.signal_story_progress.emit(story, index, len(stories_dir))
+            self.signal_story_progress.emit(story, index, len(stories_uuid_found))
 
             if story not in self.stories:
                 # remove it
                 try:
-                    lost_story_path = os.path.join(content_dir, story)
+                    hidden = os.path.join(self.mount_point, self.STORIES_BASEDIR, story) not in stories_active
+                    if hidden:
+                        lost_story_path = os.path.join(hidden_content_dir, story)
+                    else:
+                        lost_story_path = os.path.join(content_dir, story)
 
                     # computing lost size
                     for parent_dir, _, files in os.walk(lost_story_path):
@@ -615,11 +647,11 @@ class LuniiDevice(QtCore.QObject):
                             recovered_size += os.path.getsize(os.path.join(parent_dir, file))
 
                     # removing whole directory
-                    self.signal_logger.emit(logging.INFO, f"Deleting - {lost_story_path}")
+                    self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Deleting - {}").format(lost_story_path))
                     shutil.rmtree(lost_story_path)
                     removed += 1
                 except (OSError, PermissionError) as e:
-                    self.signal_logger.emit(logging.WARN, f"Failed to delete - {lost_story_path}")
+                    self.signal_logger.emit(logging.WARN, QCoreApplication.translate("LuniiDevice", "Failed to delete - {}").format(lost_story_path))
                     self.signal_logger.emit(logging.ERROR, e)
 
         return removed, recovered_size//1024//1024
@@ -725,7 +757,7 @@ class LuniiDevice(QtCore.QObject):
         pk_list = []
         for ext in LUNII_SUPPORTED_EXT:
             pk_list += glob.glob(os.path.join(story_path, "**/*" + ext), recursive=True)
-        self.signal_logger.emit(logging.INFO, f"Importing {len(pk_list)} archives...")
+        self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Importing {} archives...").format(len(pk_list)))
         for index, pk in enumerate(pk_list):
             self.signal_logger.emit(logging.INFO, f"{index+1:>2}/{len(pk_list)} > {pk}")
             self.import_story(pk)
@@ -735,25 +767,25 @@ class LuniiDevice(QtCore.QObject):
     def import_story(self, story_path):
         archive_type = TYPE_UNK
 
-        self.signal_logger.emit(logging.INFO, f"🚧 Loading {story_path}...")
+        self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "🚧 Loading {}...").format(story_path))
 
         archive_size = os.path.getsize(story_path)
         free_space = psutil.disk_usage(str(self.mount_point)).free
         if archive_size >= free_space:
-            self.signal_logger.emit(logging.ERROR, f"Not enough space left on Lunii (only {free_space//1024//1024}MB)")
+            self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "Not enough space left on Lunii (only {}MB)").format(free_space//1024//1024))
             return False
 
         # identifying based on filename
         if story_path.lower().endswith(EXT_PK_PLAIN):
-            archive_type = TYPE_PLAIN
+            archive_type = TYPE_LUNII_PLAIN
         elif story_path.lower().endswith(EXT_PK_V2):
-            archive_type = TYPE_V2
+            archive_type = TYPE_LUNII_V2
         elif story_path.lower().endswith(EXT_PK_V1):
-            archive_type = TYPE_V2
+            archive_type = TYPE_LUNII_V2
         elif story_path.lower().endswith(EXT_ZIP):
-            archive_type = TYPE_ZIP
+            archive_type = TYPE_LUNII_ZIP
         elif story_path.lower().endswith(EXT_7z):
-            archive_type = TYPE_7Z
+            archive_type = TYPE_LUNII_7Z
         elif story_path.lower().endswith(EXT_PK_VX):
             # trying to guess version v1/2 or v3 based on bt contents
             with zipfile.ZipFile(file=story_path) as zip_file:
@@ -765,9 +797,9 @@ class LuniiDevice(QtCore.QObject):
                 if bt_files:
                     bt_size = zip_file.getinfo(bt_files[0]).file_size
                     if bt_size == 0x20:
-                        archive_type = TYPE_V3
+                        archive_type = TYPE_LUNII_V3
                     else:
-                        archive_type = TYPE_V2
+                        archive_type = TYPE_LUNII_V2
                 # based on ri
                 elif (any(file.endswith("ri") for file in zip_contents) and
                       any(file.endswith("si") for file in zip_contents) and
@@ -779,14 +811,14 @@ class LuniiDevice(QtCore.QObject):
                     ri_ciphered = zip_file.read(ri_file)
                     ri_plain = self.__v1v2_decipher(ri_ciphered, lunii_generic_key, 0, 512)
                     if ri_plain[:4] == b"000\\":
-                        archive_type = TYPE_V2
+                        archive_type = TYPE_LUNII_V2
                     else:
-                        archive_type = TYPE_V3
+                        archive_type = TYPE_LUNII_V3
                 else:
                     archive_type = TYPE_UNK
 
         # supplementary verification for zip
-        if archive_type == TYPE_ZIP:
+        if archive_type == TYPE_LUNII_ZIP:
             # trying to figure out based on zip contents
             with zipfile.ZipFile(file=story_path) as zip_file:
                 # reading all available files
@@ -796,11 +828,11 @@ class LuniiDevice(QtCore.QObject):
                 if FILE_STUDIO_JSON in zip_contents and any('assets/' in entry for entry in zip_contents):
                     archive_type = TYPE_STUDIO_ZIP
                 elif FILE_UUID in zip_contents:
-                    archive_type = TYPE_ZIP
+                    archive_type = TYPE_LUNII_ZIP
                 else:
-                    archive_type = TYPE_V2
+                    archive_type = TYPE_LUNII_V2
         # supplementary verification for 7z
-        elif archive_type == TYPE_7Z:
+        elif archive_type == TYPE_LUNII_7Z:
             # trying to figure out based on 7z contents
             with py7zr.SevenZipFile(story_path, 'r') as archive:
                 # reading all available files
@@ -811,29 +843,29 @@ class LuniiDevice(QtCore.QObject):
                     archive_type = TYPE_STUDIO_7Z
 
         # processing story
-        if archive_type == TYPE_PLAIN:
+        if archive_type == TYPE_LUNII_PLAIN:
             self.signal_logger.emit(logging.DEBUG, "Archive => TYPE_PLAIN")
-            return self.import_story_plain(story_path)
-        elif archive_type == TYPE_ZIP:
+            return self.import_lunii_plain(story_path)
+        elif archive_type == TYPE_LUNII_ZIP:
             self.signal_logger.emit(logging.DEBUG, "Archive => TYPE_ZIP")
-            return self.import_story_zip(story_path)
-        elif archive_type == TYPE_7Z:
+            return self.import_lunii_zip(story_path)
+        elif archive_type == TYPE_LUNII_7Z:
             self.signal_logger.emit(logging.DEBUG, "Archive => TYPE_7Z")
-            return self.import_story_7z(story_path)
-        elif archive_type == TYPE_V2:
+            return self.import_lunii_v2_7z(story_path)
+        elif archive_type == TYPE_LUNII_V2:
             self.signal_logger.emit(logging.DEBUG, "Archive => TYPE_V2")
-            return self.import_story_v2(story_path)
-        elif archive_type == TYPE_V3:
+            return self.import_lunii_v2_zip(story_path)
+        elif archive_type == TYPE_LUNII_V3:
             self.signal_logger.emit(logging.DEBUG, "Archive => TYPE_V3")
-            return self.import_story_v3(story_path)
+            return self.import_lunii_v3(story_path)
         elif archive_type == TYPE_STUDIO_ZIP:
             self.signal_logger.emit(logging.DEBUG, "Archive => TYPE_STUDIO_ZIP")
-            return self.import_story_studio_zip(story_path)
+            return self.import_studio_zip(story_path)
         elif archive_type == TYPE_STUDIO_7Z:
             self.signal_logger.emit(logging.DEBUG, "Archive => TYPE_STUDIO_7Z")
-            return self.import_story_studio_7z(story_path)
+            return self.import_studio_7z(story_path)
 
-    def import_story_plain(self, story_path):
+    def import_lunii_plain(self, story_path):
         night_mode = False
 
         # checking if archive is OK
@@ -849,7 +881,7 @@ class LuniiDevice(QtCore.QObject):
             # reading all available files
             zip_contents = zip_file.namelist()
             if FILE_UUID not in zip_contents:
-                self.signal_logger.emit(logging.ERROR, "No UUID file found in archive. Unable to add this story.")
+                self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "No UUID file found in archive. Unable to add this story."))
                 return False
 
             # getting UUID file
@@ -861,7 +893,7 @@ class LuniiDevice(QtCore.QObject):
         
             # checking if UUID already loaded
             if str(new_uuid) in self.stories:
-                self.signal_logger.emit(logging.WARNING, f"'{self.stories.get_story(new_uuid).name}' is already loaded !")
+                self.signal_logger.emit(logging.WARNING, QCoreApplication.translate("LuniiDevice", "'{}' is already loaded !").format(self.stories.get_story(new_uuid).name))
                 return False
 
             # thirdparty story ?
@@ -888,7 +920,7 @@ class LuniiDevice(QtCore.QObject):
                 self.signal_story_progress.emit(short_uuid, index, len(zip_contents))
                 # abort requested ? early exit
                 if self.abort_process:
-                    self.signal_logger.emit(logging.WARNING, f"Import aborted, performing cleanup on current story...")
+                    self.signal_logger.emit(logging.WARNING, QCoreApplication.translate("LuniiDevice", "Import aborted, performing cleanup on current story..."))
                     self.__clean_up_story_dir(new_uuid)
                     return False
 
@@ -897,6 +929,11 @@ class LuniiDevice(QtCore.QObject):
                     continue
                 if file.endswith("nm"):
                     night_mode = True
+
+                # checking zip content
+                info = zip_file.getinfo(file)
+                if info.is_dir():
+                    continue
 
                 # Extract each zip file
                 data_plain = zip_file.read(file)
@@ -911,16 +948,15 @@ class LuniiDevice(QtCore.QObject):
                 if not target.parent.exists():
                     target.parent.mkdir(parents=True)
                 # write target file
-                self.signal_logger.emit(logging.DEBUG, f"File {index+1}/{len(zip_contents)} > {file_newname}")
-                with open(target, "wb") as f_dst:
-                    f_dst.write(data)
+                self.signal_logger.emit(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "File {}/{} > {}").format(index+1, len(zip_contents), file_newname))
+                self.__write_with_progress(target, data)
 
                 # in case of v2 device, we need to prepare bt file 
                 if self.device_version <= LUNII_V2 and file.endswith("ri.plain"):
                     self.bt = self.cipher(data[0:0x40], self.device_key)
 
         # creating authorization file : bt
-        self.signal_logger.emit(logging.INFO, "Authorization file creation...")
+        self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Authorization file creation..."))
         bt_path = output_path.joinpath("bt")
         with open(bt_path, "wb") as fp_bt:
             fp_bt.write(self.bt)
@@ -931,7 +967,7 @@ class LuniiDevice(QtCore.QObject):
 
         return True
 
-    def import_story_zip(self, story_path):
+    def import_lunii_zip(self, story_path):
         night_mode = False
 
         # checking if archive is OK
@@ -947,10 +983,10 @@ class LuniiDevice(QtCore.QObject):
             # reading all available files
             zip_contents = zip_file.namelist()
             if FILE_UUID not in zip_contents:
-                self.signal_logger.emit(logging.ERROR, "No UUID file found in archive. Unable to add this story.")
+                self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "No UUID file found in archive. Unable to add this story."))
                 return False
             if FILE_STUDIO_JSON in zip_contents:
-                self.signal_logger.emit(logging.ERROR, "Studio story format is not supported. Unable to add this story.")
+                self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "Archive seems to be a STUdio story (Lunii story expected)."))
                 return False
 
             # getting UUID file
@@ -962,7 +998,7 @@ class LuniiDevice(QtCore.QObject):
         
             # checking if UUID already loaded
             if str(new_uuid) in self.stories:
-                self.signal_logger.emit(logging.WARNING, f"'{self.stories.get_story(new_uuid).name}' is already loaded !")
+                self.signal_logger.emit(logging.WARNING, QCoreApplication.translate("LuniiDevice", "'{}' is already loaded !").format(self.stories.get_story(new_uuid).name))
                 return False
 
             # decompressing story contents
@@ -976,7 +1012,7 @@ class LuniiDevice(QtCore.QObject):
                 self.signal_story_progress.emit(short_uuid, index, len(zip_contents))
                 # abort requested ? early exit
                 if self.abort_process:
-                    self.signal_logger.emit(logging.WARNING, f"Import aborted, performing cleanup on current story...")
+                    self.signal_logger.emit(logging.WARNING, QCoreApplication.translate("LuniiDevice", "Import aborted, performing cleanup on current story..."))
                     self.__clean_up_story_dir(new_uuid)
                     return False
 
@@ -1005,16 +1041,15 @@ class LuniiDevice(QtCore.QObject):
                 if not target.parent.exists():
                     target.parent.mkdir(parents=True)
                 # write target file
-                self.signal_logger.emit(logging.DEBUG, f"File {index+1}/{len(zip_contents)} > {file_newname}")
-                with open(target, "wb") as f_dst:
-                    f_dst.write(data)
+                self.signal_logger.emit(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "File {}/{} > {}").format(index+1, len(zip_contents), file_newname))
+                self.__write_with_progress(target, data)
 
                 # in case of v2 device, we need to prepare bt file 
                 if self.device_version <= LUNII_V2 and file.endswith("ri"):
                     self.bt = self.cipher(data[0:0x40], self.device_key)
 
         # creating authorization file : bt
-        self.signal_logger.emit(logging.INFO, "Authorization file creation...")
+        self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Authorization file creation..."))
         bt_path = output_path.joinpath("bt")
         with open(bt_path, "wb") as fp_bt:
             fp_bt.write(self.bt)
@@ -1025,7 +1060,7 @@ class LuniiDevice(QtCore.QObject):
 
         return True
 
-    def import_story_7z(self, story_path):
+    def import_lunii_v2_7z(self, story_path):
         night_mode = False
 
         # checking if archive is OK
@@ -1051,15 +1086,15 @@ class LuniiDevice(QtCore.QObject):
                     else:
                         new_uuid = UUID(uuid_str)
                 except ValueError as e:
-                    self.signal_logger.emit(logging.ERROR, f"UUID parse error {e}")
+                    self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "UUID parse error {}").format(e))
                     return False
             else:
-                self.signal_logger.emit(logging.ERROR, "UUID directory is missing in archive !")
+                self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "UUID directory is missing in archive !"))
                 return False
 
             # checking if UUID already loaded
             if str(new_uuid) in self.stories:
-                self.signal_logger.emit(logging.WARNING, f"'{self.stories.get_story(new_uuid).name}' is already loaded !")
+                self.signal_logger.emit(logging.WARNING, QCoreApplication.translate("LuniiDevice", "'{}' is already loaded !").format(self.stories.get_story(new_uuid).name))
                 return False
             
             # decompressing story contents
@@ -1075,7 +1110,7 @@ class LuniiDevice(QtCore.QObject):
                 self.signal_story_progress.emit(short_uuid, index, len(contents))
                 # abort requested ? early exit
                 if self.abort_process:
-                    self.signal_logger.emit(logging.WARNING, f"Import aborted, performing cleanup on current story...")
+                    self.signal_logger.emit(logging.WARNING, QCoreApplication.translate("LuniiDevice", "Import aborted, performing cleanup on current story..."))
                     self.__clean_up_story_dir(new_uuid)
                     return False
 
@@ -1114,16 +1149,15 @@ class LuniiDevice(QtCore.QObject):
                 if not target.parent.exists():
                     target.parent.mkdir(parents=True)
                 # write target file
-                self.signal_logger.emit(logging.DEBUG, f"File {index+1}/{len(contents)} > {file_newname}")
-                with open(target, "wb") as f_dst:
-                    f_dst.write(data)
+                self.signal_logger.emit(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "File {}/{} > {}").format(index+1, len(contents), file_newname))
+                self.__write_with_progress(target, data)
 
                 # in case of v2 device, we need to prepare bt file 
                 if self.device_version <= LUNII_V2 and file.endswith("ri"):
                     self.bt = self.cipher(data[0:0x40], self.device_key)
 
         # creating authorization file : bt
-        self.signal_logger.emit(logging.INFO, "Authorization file creation...")
+        self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Authorization file creation..."))
         bt_path = output_path.joinpath(str(new_uuid).upper()[28:]+"/bt")
         with open(bt_path, "wb") as fp_bt:
             fp_bt.write(self.bt)
@@ -1134,7 +1168,7 @@ class LuniiDevice(QtCore.QObject):
 
         return True
 
-    def import_story_v2(self, story_path):
+    def import_lunii_v2_zip(self, story_path):
         night_mode = False
 
         # checking if archive is OK
@@ -1161,15 +1195,15 @@ class LuniiDevice(QtCore.QObject):
                     else:
                         new_uuid = UUID(uuid_str)
                 except ValueError as e:
-                    self.signal_logger.emit(logging.ERROR, f"UUID parse error {e}")
+                    self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "UUID parse error {}").format(e))
                     return False
             else:
-                self.signal_logger.emit(logging.ERROR, "UUID directory is missing in archive !")
+                self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "UUID directory is missing in archive !"))
                 return False
 
             # checking if UUID already loaded
             if str(new_uuid) in self.stories:
-                self.signal_logger.emit(logging.WARNING, f"'{self.stories.get_story(new_uuid).name}' is already loaded !")
+                self.signal_logger.emit(logging.WARNING, QCoreApplication.translate("LuniiDevice", "'{}' is already loaded !").format(self.stories.get_story(new_uuid).name))
                 return False
 
             # decompressing story contents
@@ -1184,7 +1218,7 @@ class LuniiDevice(QtCore.QObject):
                 self.signal_story_progress.emit(short_uuid, index, len(zip_contents))
                 # abort requested ? early exit
                 if self.abort_process:
-                    self.signal_logger.emit(logging.WARNING, f"Import aborted, performing cleanup on current story...")
+                    self.signal_logger.emit(logging.WARNING, QCoreApplication.translate("LuniiDevice", "Import aborted, performing cleanup on current story..."))
                     self.__clean_up_story_dir(new_uuid)
                     return False
 
@@ -1225,16 +1259,15 @@ class LuniiDevice(QtCore.QObject):
                 if not target.parent.exists():
                     target.parent.mkdir(parents=True)
                 # write target file
-                self.signal_logger.emit(logging.DEBUG, f"File {index+1}/{len(zip_contents)} > {file_newname}")
-                with open(target, "wb") as f_dst:
-                    f_dst.write(data)
+                self.signal_logger.emit(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "File {}/{} > {}").format(index+1, len(zip_contents), file_newname))
+                self.__write_with_progress(target, data)
 
                 # in case of v2 device, we need to prepare bt file 
                 if self.device_version <= LUNII_V2 and file.endswith("ri"):
                     self.bt = self.cipher(data[0:0x40], self.device_key)
 
         # creating authorization file : bt
-        self.signal_logger.emit(logging.INFO, "Authorization file creation...")
+        self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Authorization file creation..."))
         bt_path = output_path.joinpath(str(new_uuid).upper()[28:]+"/bt")
         with open(bt_path, "wb") as fp_bt:
             fp_bt.write(self.bt)
@@ -1245,8 +1278,8 @@ class LuniiDevice(QtCore.QObject):
 
         return True
 
-    def import_story_v3(self, story_path):
-        self.signal_logger.emit(logging.ERROR, "unsupported story format")
+    def import_lunii_v3(self, story_path):
+        self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "unsupported story format"))
         return False
 
     def get_uuid_from_story_studio_zip(self, story_path):
@@ -1305,10 +1338,10 @@ class LuniiDevice(QtCore.QObject):
             # reading all available files
             zip_contents = zip_file.namelist()
             if FILE_UUID in zip_contents:
-                self.signal_logger.emit(logging.ERROR, "plain.pk format detected ! Unable to add this story.")
+                self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "plain.pk format detected ! Unable to add this story."))
                 return False
             if FILE_STUDIO_JSON not in zip_contents:
-                self.signal_logger.emit(logging.ERROR, "missing 'story.json'. Unable to add this story.")
+                self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "missing 'story.json'. Unable to add this story."))
                 return False
 
             # getting UUID file
@@ -1320,14 +1353,14 @@ class LuniiDevice(QtCore.QObject):
 
             one_story = StudioStory(story_json)
             if not one_story.compatible:
-                self.signal_logger.emit(logging.ERROR, "STUdio story with non MP3 audio file. You need FFMPEG tool to import such kind of story, refer to README.md")
+                self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "STUdio story with non MP3 audio file. You need FFMPEG tool to import such kind of story, refer to README.md"))
                 return False
 
             stories.thirdparty_db_add_story(one_story.uuid, one_story.title, one_story.description)
 
             # checking if UUID already loaded
             if str(one_story.uuid) in self.stories:
-                self.signal_logger.emit(logging.WARNING, f"'{one_story.name}' is already loaded !")
+                self.signal_logger.emit(logging.WARNING, QCoreApplication.translate("LuniiDevice", "'{}' is already loaded !").format(one_story.name))
                 return False
 
             # decompressing story contents
@@ -1341,7 +1374,7 @@ class LuniiDevice(QtCore.QObject):
                 self.signal_story_progress.emit(short_uuid, index, len(zip_contents))
                 # abort requested ? early exit
                 if self.abort_process:
-                    self.signal_logger.emit(logging.WARNING, f"Import aborted, performing cleanup on current story...")
+                    self.signal_logger.emit(logging.WARNING, QCoreApplication.translate("LuniiDevice", "Import aborted, performing cleanup on current story..."))
                     self.__clean_up_story_dir(one_story.uuid)
                     return False
 
@@ -1371,16 +1404,18 @@ class LuniiDevice(QtCore.QObject):
                     # transcode audio if necessary
                     if transcoding_required(file, data):
                         if not STORY_TRANSCODING_SUPPORTED:
-                            self.signal_logger.emit(logging.ERROR, "STUdio story with non MP3 audio file. You need FFMPEG tool to import such kind of story, refer to README.md")
+                            self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "STUdio story with non MP3 audio file. You need FFMPEG tool to import such kind of story, refer to README.md"))
                             return False
 
-                        self.signal_logger.emit(logging.WARN, f"⌛ Transcoding audio {file_newname} : {len(data)//1024:4} KB ...")
+                        self.signal_logger.emit(logging.WARN, QCoreApplication.translate("LuniiDevice", "⌛ Transcoding audio {} : {} KB ...").format(file_newname, len(data)//1024))
                         # len_before = len(data)//1024
+                        self.signal_file_progress.emit(f"⌛ FFMPEG", 0, 0)
                         data = audio_to_mp3(data)
+                        self.signal_file_progress.emit(f"", 0, 0)
                         # print(f"Transcoded from {len_before:4}KB to {len(data)//1024:4}KB")
                     # removing tags if necessary
                     if tags_removal_required(data):
-                        self.signal_logger.emit(logging.WARN, f"⌛ Removing tags from audio {file_newname}")
+                        self.signal_logger.emit(logging.WARN, QCoreApplication.translate("LuniiDevice", "⌛ Removing tags from audio {}").format(file_newname))
                         data = mp3_tag_cleanup(data)
 
                 else:
@@ -1395,9 +1430,8 @@ class LuniiDevice(QtCore.QObject):
                 if not target.parent.exists():
                     target.parent.mkdir(parents=True)
                 # write target file
-                self.signal_logger.emit(logging.DEBUG, f"File {index+1}/{len(zip_contents)} > {file_newname}")
-                with open(target, "wb") as f_dst:
-                    f_dst.write(data_ciphered)
+                self.signal_logger.emit(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "File {}/{} > {}").format(index+1, len(zip_contents), file_newname))
+                self.__write_with_progress(target, data_ciphered)
 
         # creating lunii index files : ri
         ri_data = one_story.get_ri_data()
@@ -1413,14 +1447,14 @@ class LuniiDevice(QtCore.QObject):
         self.__write(one_story.get_ni_data(), output_path, "ni")
 
         # creating authorization file : bt
-        self.signal_logger.emit(logging.INFO, "Authorization file creation...")
+        self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Authorization file creation..."))
         bt_path = output_path.joinpath("bt")
         with open(bt_path, "wb") as fp_bt:
             fp_bt.write(self.bt)
 
         # creating night mode file
         if one_story.nm:
-            self.signal_logger.emit(logging.INFO, "Night mode file creation...")
+            self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Night mode file creation..."))
             # creating empty nm file
             with open(output_path.joinpath("nm"), "wb") as fp_nm:
                 pass
@@ -1431,7 +1465,7 @@ class LuniiDevice(QtCore.QObject):
 
         return True
 
-    def import_story_studio_7z(self, story_path):
+    def import_studio_7z(self, story_path):
         # checking if archive is OK
         try:
             with py7zr.SevenZipFile(story_path, mode='r'):
@@ -1445,10 +1479,10 @@ class LuniiDevice(QtCore.QObject):
             # reading all available files
             zip_contents = zip.readall()
             if FILE_UUID in zip_contents:
-                self.signal_logger.emit(logging.ERROR, "plain.pk format detected ! Unable to add this story.")
+                self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "plain.pk format detected ! Unable to add this story."))
                 return False
             if FILE_STUDIO_JSON not in zip_contents:
-                self.signal_logger.emit(logging.ERROR, "missing 'story.json'. Unable to add this story.")
+                self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "missing 'story.json'. Unable to add this story."))
                 return False
   
             # getting UUID file
@@ -1460,14 +1494,14 @@ class LuniiDevice(QtCore.QObject):
 
             one_story = StudioStory(story_json)
             if not one_story.compatible:
-                self.signal_logger.emit(logging.ERROR, "STUdio story with non MP3 audio file. You need FFMPEG tool to import such kind of story, refer to README.md")
+                self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "STUdio story with non MP3 audio file. You need FFMPEG tool to import such kind of story, refer to README.md"))
                 return False
 
             stories.thirdparty_db_add_story(one_story.uuid, one_story.title, one_story.description)
 
             # checking if UUID already loaded
             if str(one_story.uuid) in self.stories:
-                self.signal_logger.emit(logging.WARNING, f"'{one_story.name}' is already loaded !")
+                self.signal_logger.emit(logging.WARNING, QCoreApplication.translate("LuniiDevice", "'{}' is already loaded !").format(one_story.name))
                 return False
 
             # decompressing story contents
@@ -1482,7 +1516,7 @@ class LuniiDevice(QtCore.QObject):
                 self.signal_story_progress.emit(short_uuid, index, len(contents))
                 # abort requested ? early exit
                 if self.abort_process:
-                    self.signal_logger.emit(logging.WARNING, f"Import aborted, performing cleanup on current story...")
+                    self.signal_logger.emit(logging.WARNING, QCoreApplication.translate("LuniiDevice", "Import aborted, performing cleanup on current story..."))
                     self.__clean_up_story_dir(one_story.uuid)
                     return False
 
@@ -1510,11 +1544,14 @@ class LuniiDevice(QtCore.QObject):
                     # transcode audio if necessary
                     if transcoding_required(fname, data):
                         if not STORY_TRANSCODING_SUPPORTED:
-                            self.signal_logger.emit(logging.ERROR, "STUdio story with non MP3 audio file. You need FFMPEG tool to import such kind of story, refer to README.md")
+                            self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "STUdio story with non MP3 audio file. You need FFMPEG tool to import such kind of story, refer to README.md"))
                             return False
 
-                        self.signal_logger.emit(logging.WARN, f"⌛ Transcoding audio {file_newname} : {len(data)//1024:4} KB ...")
+                        self.signal_logger.emit(logging.WARN, QCoreApplication.translate("LuniiDevice", "⌛ Transcoding audio {} : {} KB ...").format(file_newname, len(data)//1024))
+                        self.signal_file_progress.emit(f"⌛ FFMPEG", 0, 0)
                         data = audio_to_mp3(data)
+                        self.signal_file_progress.emit(f"", 0, 0)
+
                 else:
                     # unexpected file, skipping
                     continue
@@ -1527,9 +1564,8 @@ class LuniiDevice(QtCore.QObject):
                 if not target.parent.exists():
                     target.parent.mkdir(parents=True)
                 # write target file
-                self.signal_logger.emit(logging.DEBUG, f"File {index+1}/{len(contents)} > {file_newname}")
-                with open(target, "wb") as f_dst:
-                    f_dst.write(data_ciphered)
+                self.signal_logger.emit(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "File {}/{} > {}").format(index+1, len(contents), file_newname))
+                self.__write_with_progress(target, data_ciphered)
 
         # creating lunii index files : ri
         ri_data = one_story.get_ri_data()
@@ -1545,14 +1581,14 @@ class LuniiDevice(QtCore.QObject):
         self.__write(one_story.get_ni_data(), output_path, "ni")
 
         # creating authorization file : bt
-        self.signal_logger.emit(logging.INFO, "Authorization file creation...")
+        self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Authorization file creation..."))
         bt_path = output_path.joinpath("bt")
         with open(bt_path, "wb") as fp_bt:
             fp_bt.write(self.bt)
 
         # creating night mode file
         if one_story.nm:
-            self.signal_logger.emit(logging.INFO, "Night mode file creation...")
+            self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "Night mode file creation..."))
             # creating empty nm file
             with open(output_path.joinpath("nm"), "wb") as fp_nm:
                 pass
@@ -1569,6 +1605,35 @@ class LuniiDevice(QtCore.QObject):
             data = self.__get_ciphered_data(path_file, data_plain)
             # data =  data_plain
             fp.write(data)
+
+    def __write_with_progress(self, target, data):
+        time_span_s = 0.250
+        block_size = 10 * 1024  # 10KB
+
+        total_size = len(data)
+        written = 0
+        start_time = last_emit = time.time()
+        last_written = 0
+
+        fname = os.path.basename(target)
+
+        with open(target, "wb") as f_dst:
+            while written < total_size:
+                chunk = data[written:written + block_size]
+                f_dst.write(chunk)
+                written += len(chunk)
+                now = time.time()
+                if now - last_emit >= time_span_s or written == total_size:
+                    elapsed = now - last_emit
+                    speed = ((written - last_written) / elapsed) // 1024 if elapsed > 0 else 0
+
+                    self.signal_file_progress.emit(f"{speed:,} KB/s", written, total_size)
+                    self.signal_logger.emit(
+                        logging.DEBUG,
+                        f"Progress on {fname} - {written:,} / {total_size:,} Bytes ( {speed:,} KB/s )"
+                    )
+                    last_emit = now
+                    last_written = written
 
     def __story_check_v3key(self, story_path: Path, key, iv):
         # Trying to decipher RI/SI for path check
@@ -1609,7 +1674,7 @@ class LuniiDevice(QtCore.QObject):
 
         slist = self.stories.matching_stories(uuid)
         if len(slist) > 1:
-            self.signal_logger.emit(logging.ERROR, f"at least {len(slist)} match your pattern. Try a longer UUID.")
+            self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "at least {} match your pattern. Try a longer UUID.").format(len(slist)))
             for st in slist:
                 self.signal_logger.emit(logging.ERROR, f"[{st.str_uuid} - {st.name}]")
             return None
@@ -1624,8 +1689,8 @@ class LuniiDevice(QtCore.QObject):
         story_path = content_path.joinpath(uuid)
         if not story_path.is_dir():
             return None
-        
-        self.signal_logger.emit(logging.INFO, f"🚧 Exporting {uuid} - {one_story.name}")
+
+        self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "🚧 Exporting {} - {}").format(uuid, one_story.name))
 
         # for Lunii v3, checking keys (original or trick)
         if self.device_version == LUNII_V3:
@@ -1633,7 +1698,7 @@ class LuniiDevice(QtCore.QObject):
             self.load_story_keys(str(story_path.joinpath("bt")))
             # are keys usable ?
             if not self.__story_check_v3key(story_path, self.story_key, self.story_iv):
-                self.signal_logger.emit(logging.ERROR, "Lunii v3 requires Device Key for genuine story export.")
+                self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "Lunii v3 requires Device Key for genuine story export."))
                 return None
 
         # Preparing zip file
@@ -1655,7 +1720,7 @@ class LuniiDevice(QtCore.QObject):
 
         try:
             with zipfile.ZipFile(zip_path, 'w') as zip_out:
-                self.signal_logger.emit(logging.DEBUG, "> Zipping story ...")
+                self.signal_logger.emit(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "> Zipping story ..."))
                 for index, file in enumerate(story_flist):
                     self.signal_story_progress.emit(uuid, index, len(story_flist))
                     # abort requested ? early exit
@@ -1669,23 +1734,23 @@ class LuniiDevice(QtCore.QObject):
                     zip_out.writestr(file_newname, data_plain)
 
                 # adding uuid file
-                self.signal_logger.emit(logging.DEBUG, "> Adding UUID ...")
+                self.signal_logger.emit(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "> Adding UUID ..."))
                 zip_out.writestr(FILE_UUID, one_story.uuid.bytes)
 
                 # more files to be added for thirdparty stories
                 if not one_story.is_official():
-                    self.signal_logger.emit(logging.DEBUG, "> Adding thumbnail ...")
+                    self.signal_logger.emit(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "> Adding thumbnail ..."))
                     pict_data = one_story.get_picture()
                     if pict_data:
                         zip_out.writestr(FILE_THUMB, pict_data)
 
-                    self.signal_logger.emit(logging.DEBUG, "> Adding metadata ...")
+                    self.signal_logger.emit(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "> Adding metadata ..."))
                     meta = one_story.get_meta()
                     if meta:
                         zip_out.writestr(FILE_META, meta)
 
         except PermissionError as e:
-            self.signal_logger.emit(logging.ERROR, f"failed to create ZIP - {e}")
+            self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "failed to create ZIP - {}").format(e))
             return None
         
         return zip_path
@@ -1705,16 +1770,16 @@ class LuniiDevice(QtCore.QObject):
 
     def remove_story(self, short_uuid):
         if short_uuid not in self.stories:
-            self.signal_logger.emit(logging.ERROR, "This story is not present on your storyteller")
+            self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "This story is not present on your storyteller"))
             return False
 
         slist = self.stories.matching_stories(short_uuid)
         if len(slist) > 1:
-            self.signal_logger.emit(logging.ERROR, f"at least {len(slist)} match your pattern. Try a longer UUID.")
+            self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "at least {} match your pattern. Try a longer UUID.").format(len(slist)))
             return False
         uuid = slist[0].str_uuid
 
-        self.signal_logger.emit(logging.INFO, f"🚧 Removing {uuid[28:]} - {self.stories.get_story(uuid).name}...")
+        self.signal_logger.emit(logging.INFO, QCoreApplication.translate("LuniiDevice", "🚧 Removing {} - {}...").format(uuid[28:], self.stories.get_story(uuid).name))
 
         short_uuid = uuid[28:]
         self.signal_story_progress.emit(short_uuid, 0, 3)
@@ -1752,7 +1817,7 @@ def __feed_stories_file(root_path, pi_path, hidden) -> StoryList[UUID]:
                     one_uuid = UUID(bytes=next_uuid)
                     logger.log(logging.DEBUG, f"> {str(one_uuid)}")
                     if one_uuid in story_list:
-                        logger.log(logging.WARNING, f"Found duplicate story, cleaning...")
+                        logger.log(logging.WARNING, QCoreApplication.translate("LuniiDevice", "Found duplicate story, cleaning..."))
                     else:
                         one_story = Story(one_uuid, hidden)
                         # checking for night mode 
@@ -1763,7 +1828,7 @@ def __feed_stories_file(root_path, pi_path, hidden) -> StoryList[UUID]:
                     loop_again = False
     
     story_count = len(story_list)
-    logger.log(logging.INFO, f"Read {story_count} {'hidden ' if hidden else ''}stories")
+    logger.log(logging.INFO, QCoreApplication.translate("LuniiDevice", "Read {} {}stories").format(story_count, "(hidden) " if hidden else ""))
 
     return story_list
 
@@ -1777,7 +1842,7 @@ def feed_stories(root_path) -> StoryList[UUID]:
 
     story_list = StoryList()
 
-    logger.log(logging.INFO, f"Reading Lunii loaded stories...")
+    logger.log(logging.INFO, QCoreApplication.translate("LuniiDevice", "Reading Lunii loaded stories..."))
     story_list.extend(__feed_stories_file(root_path, pi_path, False))
     story_list.extend(__feed_stories_file(root_path, pi_hidden_path, True))
 
@@ -1802,16 +1867,16 @@ def feed_config(root_path) -> StoryList[UUID]:
     cfg_path = mount_path.joinpath(".cfg")
 
     if not os.path.isfile(cfg_path):
-        logger.log(logging.DEBUG, f"Config file not found, using default values")
+        logger.log(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "Config file not found, using default values"))
         return config
 
     with open(cfg_path, "rb") as fp_cfg:
         cfg_version = int.from_bytes(fp_cfg.read(2), 'little')
         if cfg_version != 0x100:    
-            logger.log(logging.ERROR, f"🛑 Unsupported config version {cfg_version}, using default values")
+            logger.log(logging.ERROR, QCoreApplication.translate("LuniiDevice", "🛑 Unsupported config version {}, using default values").format(cfg_version))
             return config
-        
-        logger.log(logging.DEBUG, f"Reading Lunii config...")
+
+        logger.log(logging.DEBUG, QCoreApplication.translate("LuniiDevice", "Reading Lunii config..."))
         # while end of cfg file not reached
         while True:
             cfg_index = int.from_bytes(fp_cfg.read(2), 'little')
