@@ -996,10 +996,10 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>Operation progress</string>
+             <string>Night Mode</string>
             </property>
-            <property name="value">
-             <number>12</number>
+            <property name="textAlignment">
+             <set>AlignCenter</set>
             </property>
             <property name="textVisible">
              <bool>false</bool>
@@ -1031,13 +1031,28 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>Writing speed</string>
+             <string>Database source (Official / Third Party)</string>
             </property>
-            <property name="frameShape">
-             <enum>QFrame::Panel</enum>
+            <property name="textAlignment">
+             <set>AlignCenter</set>
             </property>
-            <property name="frameShadow">
-             <enum>QFrame::Sunken</enum>
+           </column>
+           <column>
+            <property name="text">
+             <string notr="true">UUID</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Size</string>
+            </property>
+            <property name="textAlignment">
+             <set>AlignLeading|AlignVCenter</set>
+            </property>
+           </column>
+           <item>
+            <property name="text">
+             <string notr="true">Suzanne et Gaston</string>
             </property>
             <property name="text">
              <string>No Thumb</string>
@@ -1045,12 +1060,8 @@
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <property name="spacing">
-             <number>1</number>
+            <property name="text">
+             <string notr="true">C4139D59-872A-4D15-8CF1-76D34CDF38C6</string>
             </property>
             <item>
              <widget class="QProgressBar" name="pbar_story">

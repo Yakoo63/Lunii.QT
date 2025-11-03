@@ -362,7 +362,7 @@ class Ui_MainWindow(object):
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setSpacing(1)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.pbar_story = QProgressBar(self.centralwidget)
+        self.pbar_story = QProgressBar(self.layoutWidget)
         self.pbar_story.setObjectName(u"pbar_story")
         self.pbar_story.setMaximumSize(QSize(16777215, 10))
         self.pbar_story.setValue(24)
@@ -370,7 +370,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.pbar_story)
 
-        self.pbar_file = QProgressBar(self.centralwidget)
+        self.pbar_file = QProgressBar(self.layoutWidget)
         self.pbar_file.setObjectName(u"pbar_file")
         self.pbar_file.setMaximumSize(QSize(16777215, 6))
         self.pbar_file.setBaseSize(QSize(0, 0))
@@ -858,6 +858,32 @@ class Ui_MainWindow(object):
         self.tree_stories.setSortingEnabled(False)
         self.tree_stories.setSortingEnabled(__sortingEnabled)
 
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabLuniiContent), QCoreApplication.translate("MainWindow", u"My Lunii", None))
+        self.radio_official_table.setText(QCoreApplication.translate("MainWindow", u"List", None))
+        self.radio_official_gallery.setText(QCoreApplication.translate("MainWindow", u"Gallery", None))
+        self.local_db_line_edit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"(Local Story Library path)", None))
+        self.local_db_choose_folder_button.setText(QCoreApplication.translate("MainWindow", u"...", None))
+        ___qtreewidgetitem1 = self.tree_stories_official.headerItem()
+        ___qtreewidgetitem1.setText(6, QCoreApplication.translate("MainWindow", u"Size", None));
+        ___qtreewidgetitem1.setText(4, QCoreApplication.translate("MainWindow", u"Path", None));
+        ___qtreewidgetitem1.setText(3, QCoreApplication.translate("MainWindow", u"Installation Id", None));
+        ___qtreewidgetitem1.setText(2, QCoreApplication.translate("MainWindow", u"Language", None));
+        ___qtreewidgetitem1.setText(1, QCoreApplication.translate("MainWindow", u"Story Name", None));
+        ___qtreewidgetitem1.setText(0, QCoreApplication.translate("MainWindow", u"Age", None));
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabOfficialStories), QCoreApplication.translate("MainWindow", u"Official Store", None))
+        self.radio_third_party_table.setText(QCoreApplication.translate("MainWindow", u"List", None))
+        self.radio_third_party_gallery.setText(QCoreApplication.translate("MainWindow", u"Gallery", None))
+        self.third_party_db_line_edit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"(Third Party Story Library path)", None))
+        self.third_party_db_choose_folder_button.setText(QCoreApplication.translate("MainWindow", u"...", None))
+        ___qtreewidgetitem2 = self.tree_stories_third_party.headerItem()
+        ___qtreewidgetitem2.setText(5, QCoreApplication.translate("MainWindow", u"Size", None));
+        ___qtreewidgetitem2.setText(3, QCoreApplication.translate("MainWindow", u"Path", None));
+        ___qtreewidgetitem2.setText(2, QCoreApplication.translate("MainWindow", u"Installation Id", None));
+        ___qtreewidgetitem2.setText(1, QCoreApplication.translate("MainWindow", u"Story Name", None));
+        ___qtreewidgetitem2.setText(0, QCoreApplication.translate("MainWindow", u"Age", None));
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabThirdPartyStories), QCoreApplication.translate("MainWindow", u"Third Party Store", None))
+        self.add_story_button.setText(QCoreApplication.translate("MainWindow", u"Add Story", None))
+        self.remove_story_button.setText(QCoreApplication.translate("MainWindow", u"Remove Story", None))
         self.lbl_total.setText(QCoreApplication.translate("MainWindow", u"Total", None))
 #if QT_CONFIG(tooltip)
         self.pbar_total.setToolTip(QCoreApplication.translate("MainWindow", u"Operation progress", None))
