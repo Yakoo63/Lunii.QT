@@ -362,7 +362,7 @@ class Ui_MainWindow(object):
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setSpacing(1)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.pbar_story = QProgressBar(self.layoutWidget)
+        self.pbar_story = QProgressBar(self.tabLuniiContent)
         self.pbar_story.setObjectName(u"pbar_story")
         self.pbar_story.setMaximumSize(QSize(16777215, 10))
         self.pbar_story.setValue(24)
@@ -370,7 +370,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.pbar_story)
 
-        self.pbar_file = QProgressBar(self.layoutWidget)
+        self.pbar_file = QProgressBar(self.tabLuniiContent)
         self.pbar_file.setObjectName(u"pbar_file")
         self.pbar_file.setMaximumSize(QSize(16777215, 6))
         self.pbar_file.setBaseSize(QSize(0, 0))
