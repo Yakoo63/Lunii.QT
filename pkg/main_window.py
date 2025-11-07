@@ -7,7 +7,7 @@ import psutil
 import requests
 from PySide6 import QtCore, QtGui
 from PySide6.QtCore import QItemSelectionModel, QUrl, QSize, QTimer, QModelIndex, QSortFilterProxyModel
-from PySide6.QtGui import QFont, QShortcut, QKeySequence, QPixmap, Qt, QDesktopServices, QIcon, QGuiApplication, QColor, QStandardItem, QStandardItemModel, QPainter
+from PySide6.QtGui import QFont, QShortcut, QKeySequence, QPixmap, Qt, QDesktopServices, QIcon, QGuiApplication, QColor, QStandardItem, QStandardItemModel, QPainter, QImage
 from PySide6.QtWidgets import QMainWindow, QTreeWidgetItem, QFileDialog, QMessageBox, QLabel, QFrame, QHeaderView, \
     QDialog, QApplication, QButtonGroup, QListView
 
@@ -16,7 +16,7 @@ from pkg.api import constants
 from pkg.api import stories
 from pkg.api.constants import *
 from pkg.api.device_flam import is_flam, FlamDevice
-from pkg.api.device_lunii import LuniiDevice, is_lunii
+from pkg.api.device_lunii import LuniiDevice, is_lunii, get_uuid_from_story_studio_zip
 from pkg.api.devices import find_devices
 from pkg.api.firmware import luniistore_get_authtoken, device_fw_download, device_fw_getlist
 from pkg.api.stories import story_load_db, StoryList
@@ -618,7 +618,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     subtitle = stories.DB_OFFICIAL[uuid]["localized_infos"][locale].get("subtitle", "")
                     url = os.path.join(CACHE_DIR, uuid)
                     self.story_details.setHtml(
-                        "<img src=\"" + url + "\" width=\"" + str(self.story_details.width()) + "\" /><br>"
+                        "<img src=\"" + url + "\" width=\"" + str(min(self.story_details.width(), QImage(url).width())) + "\" /><br>"
                         + "<h2>" + title + "</h2>"
                         + "<h3>" + subtitle + "</h3>" 
                         + description)
@@ -627,7 +627,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     title = stories.DB_THIRD_PARTY[uuid].get("title")
                     url = os.path.join(CACHE_DIR, uuid)
                     self.story_details.setHtml(
-                        "<img src=\"" + url + "\" width=\"" + str(self.story_details.width()) + "\" /><br>"
+                        "<img src=\"" + url + "\" width=\"" + str(min(self.story_details.width(), QImage(url).width())) + "\" /><br>"
                         + "<h2>" + title + "</h2>"
                         + description)
                 else:
@@ -660,7 +660,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 subtitle = stories.DB_OFFICIAL[id]["localized_infos"][locale].get("subtitle", "")
                 url = os.path.join(CACHE_DIR, id)
                 self.story_details.setHtml(
-                    "<img src=\"" + url + "\" width=\"" + str(self.story_details.width()) + "\" /><br>"
+                    "<img src=\"" + url + "\" width=\"" + str(min(self.story_details.width(), QImage(url).width())) + "\" /><br>"
                     + "<h2>" + title + "</h2>"
                     + "<h3>" + subtitle + "</h3>" 
                     + description)
@@ -690,7 +690,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 title = stories.DB_THIRD_PARTY[id].get("title", "")
                 url = os.path.join(CACHE_DIR, id)
                 self.story_details.setHtml(
-                    "<img src=\"" + url + "\" width=\"" + str(self.story_details.width()) + "\" /><br>"
+                    "<img src=\"" + url + "\" width=\"" + str(min(self.story_details.width(), QImage(url).width())) + "\" /><br>"
                     + "<h2>" + title + "</h2>"
                     + description)
             else:
@@ -707,8 +707,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         retVal = story_load_db(True)
 
-        if self.audio_device:
-            self.load_missing_ids()
+        self.load_missing_ids()
 
         self.pbar_total.setValue(90)
         self.app.processEvents()
@@ -734,7 +733,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             uuid = stories.DB_THIRD_PARTY_LOCAL_BY_NAME[encoded_name][stories.DB_THIRD_PARTY_LOCAL_COL_UUID]
             if uuid == "":
                 try:
-                    uuid = str(self.audio_device.get_uuid_from_story_studio_zip(os.path.join(stories.DB_THIRD_PARTY_LOCAL_PATH, path))).upper()
+                    uuid = str(get_uuid_from_story_studio_zip(os.path.join(stories.DB_THIRD_PARTY_LOCAL_PATH, path))).upper()
                 except:
                     self.sb_update(self.tr("⚠️ Failed to extract UUID from " + path))
 

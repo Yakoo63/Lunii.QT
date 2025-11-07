@@ -1282,48 +1282,6 @@ class LuniiDevice(QtCore.QObject):
         self.signal_logger.emit(logging.ERROR, QCoreApplication.translate("LuniiDevice", "unsupported story format"))
         return False
 
-    def get_uuid_from_story_studio_zip(self, story_path):
-        # checking if archive is OK
-        try:
-            with zipfile.ZipFile(file=story_path):
-                pass  # If opening succeeds, the archive is valid
-        except zipfile.BadZipFile as e:
-            self.signal_logger.emit(logging.ERROR, e)
-            return ""
-        
-        # opening zip file
-        with zipfile.ZipFile(file=story_path) as zip_file:
-            # reading all available files
-            zip_contents = zip_file.namelist()
-            if FILE_UUID in zip_contents:
-                self.signal_logger.emit(logging.ERROR, "plain.pk format detected ! Unable to open this story.")
-                return ""
-            if FILE_STUDIO_JSON not in zip_contents:
-                self.signal_logger.emit(logging.ERROR, "missing 'story.json'. Unable to open this story.")
-                return ""
-
-            # getting UUID file
-            try:
-                story_json = json.loads(zip_file.read(FILE_STUDIO_JSON))
-            except ValueError as e:
-                self.signal_logger.emit(logging.ERROR, e)
-                return ""
-
-            one_story = StudioStory(story_json)
-            stories.thirdparty_db_add_story(one_story.uuid, one_story.title, one_story.description)
-
-            # Loop over each file
-            for index, file in enumerate(zip_contents):
-                if file.endswith(FILE_STUDIO_THUMB):
-                    # adding thumb to DB
-                    data = zip_file.read(file)
-                    stories.thirdparty_db_add_thumb(one_story.uuid, data)
-                    continue
-                
-            return one_story.uuid
-
-        return ""
-
     def import_studio_zip(self, story_path):
         # checking if archive is OK
         try:
@@ -1916,3 +1874,41 @@ def secure_filename(filename):
     # remove unallowed characters
     output = [c if c not in INVALID_FILE_CHARS else '_' for c in output]
     return "".join(output).encode("ASCII", "ignore").decode()
+
+def get_uuid_from_story_studio_zip(story_path):
+    # checking if archive is OK
+    try:
+        with zipfile.ZipFile(file=story_path):
+            pass  # If opening succeeds, the archive is valid
+    except zipfile.BadZipFile as e:
+        return ""
+    
+    # opening zip file
+    with zipfile.ZipFile(file=story_path) as zip_file:
+        # reading all available files
+        zip_contents = zip_file.namelist()
+        if FILE_UUID in zip_contents:
+            return ""
+        if FILE_STUDIO_JSON not in zip_contents:
+            return ""
+
+        # getting UUID file
+        try:
+            story_json = json.loads(zip_file.read(FILE_STUDIO_JSON))
+        except ValueError as e:
+            return ""
+
+        one_story = StudioStory(story_json)
+        stories.thirdparty_db_add_story(one_story.uuid, one_story.title, one_story.description)
+
+        # Loop over each file
+        for index, file in enumerate(zip_contents):
+            if file.endswith(FILE_STUDIO_THUMB):
+                # adding thumb to DB
+                data = zip_file.read(file)
+                stories.thirdparty_db_add_thumb(one_story.uuid, data)
+                continue
+            
+        return one_story.uuid
+
+    return ""
