@@ -144,200 +144,310 @@ Les logos sont fournis par &lt;b&gt;malexxx&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
 <context>
     <name>FlamDevice</name>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="229"/>
         <source>Not a valid UUID - {}</source>
-        <translation type="vanished">UUID non valide - {}</translation>
+        <translation>UUID non valide - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="245"/>
         <source>Recovered - {} - {}</source>
-        <translation type="vanished">Récupéré - {} - {}</translation>
+        <translation>Récupéré - {} - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="248"/>
         <source>Found - {} - {}</source>
-        <translation type="vanished">Trouvé - {} - {}</translation>
+        <translation>Trouvé - {} - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="251"/>
         <source>Skipping lost story (seems broken/incomplete) - {} - {}</source>
-        <translation type="vanished">On ignore cette histoire (semble corrompue ou incomplète) - {} - {}</translation>
+        <translation>On ignore cette histoire (semble corrompue ou incomplète) - {} - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="255"/>
         <source>Already in list but invalid - {} - {}</source>
-        <translation type="vanished">Déjà dans la liste, mais invalide - {} - {}</translation>
+        <translation>Déjà dans la liste, mais invalide - {} - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="257"/>
         <source>Already in list - {} - {}</source>
-        <translation type="vanished">Déjà dans la liste - {} - {}</translation>
+        <translation>Déjà dans la liste - {} - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="297"/>
         <source>Deleting - {}</source>
-        <translation type="vanished">Supression - {}</translation>
+        <translation>Supression - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="301"/>
         <source>Failed to delete - {}</source>
-        <translation type="vanished">Impossible de supprimer - {}</translation>
+        <translation>Impossible de supprimer - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="374"/>
         <source>🚧 Loading {}...</source>
-        <translation type="vanished">🚧 Chargement de {}...</translation>
+        <translation>🚧 Chargement de {}...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="379"/>
         <source>Not enough space left on Flam (only {}MB)</source>
-        <translation type="vanished">Pas assez de place restant sur la Flam (reste {}Mo)</translation>
+        <translation>Pas assez de place restant sur la Flam (reste {}Mo)</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="394"/>
         <source>Please update your Flam with v2.x.x to support Lunii Stories</source>
-        <translation type="vanished">Veuillez mettre à jour votre Flam avec la v2.x.x pour bénéfiier des histoires officielles Lunii</translation>
+        <translation>Veuillez mettre à jour votre Flam avec la v2.x.x pour bénéfiier des histoires officielles Lunii</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="445"/>
+        <location filename="../pkg/api/device_flam.py" line="551"/>
         <source>No UUID file found in archive. Unable to add this story.</source>
-        <translation type="vanished">Fichier UUID introuvable dans l&apos;archive. Impossible de charger cette histoire.</translation>
+        <translation>Fichier UUID introuvable dans l&apos;archive. Impossible de charger cette histoire.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="457"/>
+        <location filename="../pkg/api/device_flam.py" line="563"/>
+        <location filename="../pkg/api/device_flam.py" line="887"/>
+        <location filename="../pkg/api/device_flam.py" line="965"/>
+        <location filename="../pkg/api/device_flam.py" line="1070"/>
+        <location filename="../pkg/api/device_flam.py" line="1182"/>
+        <location filename="../pkg/api/device_flam.py" line="1329"/>
         <source>&apos;{}&apos; is already loaded !</source>
-        <translation type="vanished">&apos;{}&apos; est déjà chargée !</translation>
+        <translation>&apos;{}&apos; est déjà chargée !</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="485"/>
+        <location filename="../pkg/api/device_flam.py" line="578"/>
+        <location filename="../pkg/api/device_flam.py" line="686"/>
+        <location filename="../pkg/api/device_flam.py" line="804"/>
+        <location filename="../pkg/api/device_flam.py" line="902"/>
+        <location filename="../pkg/api/device_flam.py" line="980"/>
+        <location filename="../pkg/api/device_flam.py" line="1087"/>
+        <location filename="../pkg/api/device_flam.py" line="1197"/>
+        <location filename="../pkg/api/device_flam.py" line="1345"/>
         <source>Import aborted, performing cleanup on current story...</source>
-        <translation type="vanished">Chargement interrompu, nettoyage en cours...</translation>
+        <translation>Chargement interrompu, nettoyage en cours...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="513"/>
+        <location filename="../pkg/api/device_flam.py" line="604"/>
+        <location filename="../pkg/api/device_flam.py" line="919"/>
+        <location filename="../pkg/api/device_flam.py" line="1011"/>
+        <location filename="../pkg/api/device_flam.py" line="1121"/>
+        <location filename="../pkg/api/device_flam.py" line="1253"/>
+        <location filename="../pkg/api/device_flam.py" line="1392"/>
         <source>File {}/{} &gt; {}</source>
-        <translation type="vanished">Fichier {}/{} &gt; {}</translation>
+        <translation>Fichier {}/{} &gt; {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="517"/>
+        <location filename="../pkg/api/device_flam.py" line="608"/>
+        <location filename="../pkg/api/device_flam.py" line="718"/>
+        <location filename="../pkg/api/device_flam.py" line="834"/>
+        <location filename="../pkg/api/device_flam.py" line="1015"/>
+        <location filename="../pkg/api/device_flam.py" line="1125"/>
+        <location filename="../pkg/api/device_flam.py" line="1266"/>
+        <location filename="../pkg/api/device_flam.py" line="1405"/>
         <source>Authorization file creation...</source>
-        <translation type="vanished">Création du fichier d&apos;autorisation...</translation>
+        <translation>Création du fichier d&apos;autorisation...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="643"/>
+        <location filename="../pkg/api/device_flam.py" line="752"/>
         <source>Transciphering Flam story</source>
-        <translation type="vanished">Transchiffrement de l&apos;histoire Flam</translation>
+        <translation>Transchiffrement de l&apos;histoire Flam</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="650"/>
+        <location filename="../pkg/api/device_flam.py" line="760"/>
         <source>Flam story backup is incomplete, missing key file.</source>
-        <translation type="vanished">Sauvegarde incomplète d&apos;une histoire Flam, le fichier key est manquant.</translation>
+        <translation>Sauvegarde incomplète d&apos;une histoire Flam, le fichier key est manquant.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="652"/>
+        <location filename="../pkg/api/device_flam.py" line="762"/>
         <source>Restoring Flam story backup</source>
-        <translation type="vanished">Restauration de la sauvegarde d&apos;une histoire Flam</translation>
+        <translation>Restauration de la sauvegarde d&apos;une histoire Flam</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="849"/>
         <source>Lunii story from Flam personnal backup can&apos;t be imported on this device (SNU mismatch).</source>
-        <translation type="vanished">Cette sauvegarde personnelle Lunii sur Flam ne peut être importée (le SNU ne correspond pas).</translation>
+        <translation>Cette sauvegarde personnelle Lunii sur Flam ne peut être importée (le SNU ne correspond pas).</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="853"/>
         <source>Restoring Lunii story from Flam personnal backup...</source>
-        <translation type="vanished">Restauration d&apos;une sauvegarde personnelle Lunii sur Flam...</translation>
+        <translation>Restauration d&apos;une sauvegarde personnelle Lunii sur Flam...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1230"/>
+        <location filename="../pkg/api/device_flam.py" line="1376"/>
+        <source>⌛ Transcoding audio {} : {:4} KB ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pkg/api/device_flam.py" line="1594"/>
+        <location filename="../pkg/api/device_flam.py" line="1668"/>
         <source>&gt; Adding UUID ...</source>
-        <translation type="vanished">&gt; Ajout de l&apos;UUID ...</translation>
+        <translation>&gt; Ajout de l&apos;UUID ...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="669"/>
+        <location filename="../pkg/api/device_flam.py" line="783"/>
+        <location filename="../pkg/api/device_flam.py" line="882"/>
+        <location filename="../pkg/api/device_flam.py" line="960"/>
+        <location filename="../pkg/api/device_flam.py" line="1065"/>
         <source>UUID directory is missing in archive !</source>
-        <translation type="vanished">L&apos;archive ne contient pas le dossier UUID !</translation>
+        <translation>L&apos;archive ne contient pas le dossier UUID !</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="637"/>
+        <location filename="../pkg/api/device_flam.py" line="743"/>
         <source>Archive seems to be made of Lunii story (Flam story expected)</source>
-        <translation type="vanished">Cette archive semble être une histoire Lunii (attendu une histoire Flam)</translation>
+        <translation>Cette archive semble être une histoire Lunii (attendu une histoire Flam)</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="674"/>
+        <location filename="../pkg/api/device_flam.py" line="788"/>
         <source>&apos;{}&apos; is already loaded, aborting !</source>
-        <translation type="vanished">&apos;{}&apos; est déjà chargée, annulation !</translation>
+        <translation>&apos;{}&apos; est déjà chargée, annulation !</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="702"/>
+        <location filename="../pkg/api/device_flam.py" line="818"/>
         <source>Transciphering file {}</source>
-        <translation type="vanished">Transchiffrement du ficiher {}</translation>
+        <translation>Transchiffrement du ficiher {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="666"/>
+        <location filename="../pkg/api/device_flam.py" line="780"/>
+        <location filename="../pkg/api/device_flam.py" line="879"/>
+        <location filename="../pkg/api/device_flam.py" line="957"/>
+        <location filename="../pkg/api/device_flam.py" line="1062"/>
         <source>UUID parse error {}</source>
-        <translation type="vanished">Erreur de lecture de l&apos;UUID {}</translation>
+        <translation>Erreur de lecture de l&apos;UUID {}</translation>
     </message>
     <message>
         <source>Archive seems to be made of Lunii story (expected a Flam story)</source>
         <translation type="vanished">Cette archive semble être une histoire Lunii (au lieu d&apos;une histoire Flam)</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="798"/>
         <source>Reading 7zip archive... (takes time)</source>
-        <translation type="vanished">Lecture de l&apos;archive 7zip... (prend du temps)</translation>
+        <translation>Lecture de l&apos;archive 7zip... (prend du temps)</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="944"/>
         <source>Corrupted file format. Unable to add this story.</source>
-        <translation type="vanished">Archive corrompue. Impossible de charger cette histoire.</translation>
+        <translation>Archive corrompue. Impossible de charger cette histoire.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1160"/>
+        <location filename="../pkg/api/device_flam.py" line="1307"/>
         <source>plain.pk format detected ! Unable to add this story.</source>
-        <translation type="vanished">Format plain.pk détecté, au lieu de STUdio ! Impossible de charger cette histoire.</translation>
+        <translation>Format plain.pk détecté, au lieu de STUdio ! Impossible de charger cette histoire.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1163"/>
+        <location filename="../pkg/api/device_flam.py" line="1310"/>
         <source>missing &apos;story.json&apos;. Unable to add this story.</source>
-        <translation type="vanished">Fichier &apos;story.json&apos; manquant. Impossible de charger cette histoire.</translation>
+        <translation>Fichier &apos;story.json&apos; manquant. Impossible de charger cette histoire.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1175"/>
+        <location filename="../pkg/api/device_flam.py" line="1227"/>
+        <location filename="../pkg/api/device_flam.py" line="1322"/>
+        <location filename="../pkg/api/device_flam.py" line="1373"/>
         <source>STUdio story with non MP3 audio file. You need FFMPEG tool to import such kind of story, refer to README.md</source>
-        <translation type="vanished">Histoire STUdio avec des audio non MP3. L&apos;outil FFMPEG est nécessaire pour ce type d&apos;histoire, consulter README.md</translation>
+        <translation>Histoire STUdio avec des audio non MP3. L&apos;outil FFMPEG est nécessaire pour ce type d&apos;histoire, consulter README.md</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1238"/>
         <source>⌛ Removing tags from audio {}</source>
-        <translation type="vanished">⌛ Suppression des tags de l&apos;audio {}</translation>
+        <translation>⌛ Suppression des tags de l&apos;audio {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1273"/>
+        <location filename="../pkg/api/device_flam.py" line="1412"/>
         <source>Night mode file creation...</source>
-        <translation type="vanished">Création du fichier Mode Nuit...</translation>
+        <translation>Création du fichier Mode Nuit...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1493"/>
+        <location filename="../pkg/api/device_flam.py" line="1535"/>
+        <location filename="../pkg/api/device_flam.py" line="1605"/>
         <source>🚧 Exporting {} - {}</source>
-        <translation type="vanished">🚧 Export de {} - {}</translation>
+        <translation>🚧 Export de {} - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1517"/>
+        <location filename="../pkg/api/device_flam.py" line="1574"/>
+        <location filename="../pkg/api/device_flam.py" line="1649"/>
         <source>&gt; Zipping story ...</source>
-        <translation type="vanished">&gt; Compression de l&apos;histoire ...</translation>
+        <translation>&gt; Compression de l&apos;histoire ...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1528"/>
+        <location filename="../pkg/api/device_flam.py" line="1598"/>
+        <location filename="../pkg/api/device_flam.py" line="1684"/>
         <source>failed to create ZIP - {}</source>
-        <translation type="vanished">Erreur pendant la création du ZIP - {}</translation>
+        <translation>Erreur pendant la création du ZIP - {}</translation>
     </message>
     <message>
         <source>&gt;&gt; Adding UUID ...</source>
         <translation type="vanished">&gt; Ajout de l&apos;UUID ...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1673"/>
         <source>&gt; Adding thumbnail ...</source>
-        <translation type="vanished">&gt; Ajout de la vignette ...</translation>
+        <translation>&gt; Ajout de la vignette ...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1678"/>
         <source>&gt; Adding metadata ...</source>
-        <translation type="vanished">&gt; Ajout des metadata ...</translation>
+        <translation>&gt; Ajout des metadata ...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1693"/>
+        <location filename="../pkg/api/device_flam.py" line="1760"/>
         <source>at least {} match your pattern. Try a longer UUID.</source>
-        <translation type="vanished">au moins {} correspondances trouvées. Essayez avec un bout d&apos;UUID plus long.</translation>
+        <translation>au moins {} correspondances trouvées. Essayez avec un bout d&apos;UUID plus long.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1733"/>
         <source>This story format is not supported for export.</source>
-        <translation type="vanished">Ce format d&apos;histoire n&apos;est pas exportable.</translation>
+        <translation>Ce format d&apos;histoire n&apos;est pas exportable.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1755"/>
         <source>This story is not present on your storyteller</source>
-        <translation type="vanished">Cette histoire n&apos;est pas présente sur votre appareil</translation>
+        <translation>Cette histoire n&apos;est pas présente sur votre appareil</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1764"/>
         <source>🚧 Removing {} - {}...</source>
-        <translation type="vanished">🚧 Suppresion {} - {}...</translation>
+        <translation>🚧 Suppresion {} - {}...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1800"/>
         <source>Reading Flam loaded stories...</source>
-        <translation type="vanished">Lecture des histoires chargées dans la Flam...</translation>
+        <translation>Lecture des histoires chargées dans la Flam...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1810"/>
+        <location filename="../pkg/api/device_flam.py" line="1825"/>
         <source>Found duplicate story, cleaning...</source>
-        <translation type="vanished">Histoire dupliquée identifiée, nettoyage...</translation>
+        <translation>Histoire dupliquée identifiée, nettoyage...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1815"/>
         <source>Read {} stories</source>
-        <translation type="vanished">{} histoires lues</translation>
+        <translation>{} histoires lues</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="1829"/>
         <source>Read {} hidden stories</source>
-        <translation type="vanished">{} histoires cachées lues</translation>
+        <translation>{} histoires cachées lues</translation>
     </message>
 </context>
 <context>
@@ -356,256 +466,355 @@ Les logos sont fournis par &lt;b&gt;malexxx&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
 <context>
     <name>LuniiDevice</name>
     <message>
+        <location filename="../pkg/api/device_flam.py" line="73"/>
+        <location filename="../pkg/api/device_lunii.py" line="81"/>
+        <location filename="../pkg/api/device_lunii.py" line="1638"/>
         <source>This story is not present on your storyteller</source>
-        <translation type="vanished">Cette histoire n&apos;est pas présente sur votre appareil</translation>
+        <translation>Cette histoire n&apos;est pas présente sur votre appareil</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="158"/>
         <source>No backup of v{:d} metadata file found, creating one...</source>
-        <translation type="vanished">Aucune sauvegarde trouvée pour le fichier metadata v{:d}, copie en cours...</translation>
+        <translation>Aucune sauvegarde trouvée pour le fichier metadata v{:d}, copie en cours...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="167"/>
         <source>Forging story keys for v6 metadata file</source>
-        <translation type="vanished">Préparation des clés histoire au format v6</translation>
+        <translation>Préparation des clés histoire au format v6</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="173"/>
         <source>Forging story keys for v7+ metadata file</source>
-        <translation type="vanished">Préparation des clés histoire au format v7</translation>
+        <translation>Préparation des clés histoire au format v7</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="187"/>
+        <location filename="../pkg/api/device_lunii.py" line="278"/>
         <source>v3 key file read from {}</source>
-        <translation type="vanished">Fichier clé appareil v3 lu depuis {}</translation>
+        <translation>Fichier clé appareil v3 lu depuis {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="204"/>
         <source>.md v{:d} file found ({})</source>
-        <translation type="vanished">.md v{:d} fichier lu ({})</translation>
+        <translation>.md v{:d} fichier lu ({})</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="211"/>
         <source>.md file is not v{:d} ({})</source>
-        <translation type="vanished">Le fichier .md n&apos;est pas une v{:d} ({})</translation>
+        <translation>Le fichier .md n&apos;est pas une v{:d} ({})</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="218"/>
         <source>.md file SNU mismatch ({}) vs. ({})</source>
-        <translation type="vanished">Le SNU du fichier ne correspond pas ({}) vs. ({})</translation>
+        <translation>Le SNU du fichier ne correspond pas ({}) vs. ({})</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="235"/>
         <source>no .md v{:d} file found ({})</source>
-        <translation type="vanished">.md v{:d} fichier introuvable ({})</translation>
+        <translation>.md v{:d} fichier introuvable ({})</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="257"/>
         <source>🛑 corrupted metadata file ? (maybe SD corruption)</source>
-        <translation type="vanished">🛑 Fichier metadata corrompu ? (peut être une SD défectueuse)</translation>
+        <translation>🛑 Fichier metadata corrompu ? (peut être une SD défectueuse)</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="259"/>
         <source>⚠️ Unsupported or corrupted metadata file v{:d}, checking for backups...</source>
-        <translation type="vanished">⚠️ Fichier metadata v{:d} non supporté ou corrompu, vérification d&apos;une sauvegarde...</translation>
+        <translation>⚠️ Fichier metadata v{:d} non supporté ou corrompu, vérification d&apos;une sauvegarde...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="281"/>
         <source>🛑 no keys at all, unable to import stories. See README on Github for help.</source>
-        <translation type="vanished">🛑 pas de clés, impossible d&apos;importer des histoires. Lisez le README sur Github.</translation>
+        <translation>🛑 pas de clés, impossible d&apos;importer des histoires. Lisez le README sur Github.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="283"/>
         <source>✅ story keys found, import supported.</source>
-        <translation type="vanished">✅ clés histoires trouvées, import possible.</translation>
+        <translation>✅ clés histoires trouvées, import possible.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="405"/>
+        <location filename="../pkg/api/device_lunii.py" line="439"/>
         <source>Missing {} in {}</source>
-        <translation type="vanished">{} manquant dans {}</translation>
+        <translation>{} manquant dans {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="421"/>
         <source>Bad authorization file bt in {}</source>
-        <translation type="vanished">Mauvais fichier d&apos;autorisation bt dans {}</translation>
+        <translation>Mauvais fichier d&apos;autorisation bt dans {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="430"/>
+        <location filename="../pkg/api/device_lunii.py" line="827"/>
+        <location filename="../pkg/api/device_lunii.py" line="937"/>
+        <location filename="../pkg/api/device_lunii.py" line="1045"/>
+        <location filename="../pkg/api/device_lunii.py" line="1262"/>
+        <location filename="../pkg/api/device_lunii.py" line="1396"/>
         <source>Authorization file creation...</source>
-        <translation type="vanished">Création du fichier d&apos;autorisation...</translation>
+        <translation>Création du fichier d&apos;autorisation...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="451"/>
         <source>Missing rf/{} in {}</source>
-        <translation type="vanished">rf/{} manquant dans {}</translation>
+        <translation>rf/{} manquant dans {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="462"/>
         <source>Missing sf/{} in {}</source>
-        <translation type="vanished">sf/{} manquant dans {}</translation>
+        <translation>sf/{} manquant dans {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="465"/>
         <source>Failed to decode ri or si file</source>
-        <translation type="vanished">Echec de déchiffrement du fichier ri ou si</translation>
+        <translation>Echec de déchiffrement du fichier ri ou si</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="511"/>
         <source>Not a valid UUID - {}</source>
-        <translation type="vanished">UUID non valide - {}</translation>
+        <translation>UUID non valide - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="529"/>
         <source>Recovered - {} - {}</source>
-        <translation type="vanished">Récupéré - {} - {}</translation>
+        <translation>Récupéré - {} - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="532"/>
         <source>Found - {} - {}</source>
-        <translation type="vanished">Trouvé - {} - {}</translation>
+        <translation>Trouvé - {} - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="535"/>
         <source>Skipping lost story (seems broken/incomplete) - {} - {}</source>
-        <translation type="vanished">On ignore cette histoire (semble corrompue ou incomplète) - {} - {}</translation>
+        <translation>On ignore cette histoire (semble corrompue ou incomplète) - {} - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="539"/>
         <source>Already in list but invalid - {} - {}</source>
-        <translation type="vanished">Déjà dans la liste, mais invalide - {} - {}</translation>
+        <translation>Déjà dans la liste, mais invalide - {} - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="541"/>
         <source>Already in list - {} - {}</source>
-        <translation type="vanished">Déjà dans la liste - {} - {}</translation>
+        <translation>Déjà dans la liste - {} - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="581"/>
         <source>Deleting - {}</source>
-        <translation type="vanished">Supression - {}</translation>
+        <translation>Supression - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="585"/>
         <source>Failed to delete - {}</source>
-        <translation type="vanished">Impossible de supprimer - {}</translation>
+        <translation>Impossible de supprimer - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="694"/>
         <source>Importing {} archives...</source>
-        <translation type="vanished">Import de {} archives...</translation>
+        <translation>Import de {} archives...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="703"/>
         <source>🚧 Loading {}...</source>
-        <translation type="vanished">🚧 Chargement de {}...</translation>
+        <translation>🚧 Chargement de {}...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="708"/>
         <source>Not enough space left on Lunii (only {}MB)</source>
-        <translation type="vanished">Pas assez de place restant sur la Lunii (reste {}Mo)</translation>
+        <translation>Pas assez de place restant sur la Lunii (reste {}Mo)</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="752"/>
         <source>No UUID file found in archive. Unable to add this story.</source>
-        <translation type="vanished">Fichier UUID introuvable dans l&apos;archive. Impossible de charger cette histoire.</translation>
+        <translation>Fichier UUID introuvable dans l&apos;archive. Impossible de charger cette histoire.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="764"/>
+        <location filename="../pkg/api/device_lunii.py" line="873"/>
+        <location filename="../pkg/api/device_lunii.py" line="982"/>
+        <location filename="../pkg/api/device_lunii.py" line="1098"/>
+        <location filename="../pkg/api/device_lunii.py" line="1175"/>
+        <location filename="../pkg/api/device_lunii.py" line="1316"/>
         <source>&apos;{}&apos; is already loaded !</source>
-        <translation type="vanished">&apos;{}&apos; est déjà chargée !</translation>
+        <translation>&apos;{}&apos; est déjà chargée !</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="791"/>
+        <location filename="../pkg/api/device_lunii.py" line="888"/>
+        <location filename="../pkg/api/device_lunii.py" line="998"/>
+        <location filename="../pkg/api/device_lunii.py" line="1113"/>
+        <location filename="../pkg/api/device_lunii.py" line="1189"/>
+        <location filename="../pkg/api/device_lunii.py" line="1331"/>
         <source>Import aborted, performing cleanup on current story...</source>
-        <translation type="vanished">Chargement interrompu, nettoyage en cours...</translation>
+        <translation>Chargement interrompu, nettoyage en cours...</translation>
     </message>
     <message>
         <source>Archive seems to be a STUdio story (Lunii story expected).</source>
         <translation type="vanished">Cette archive semble être une histoire STUdio (attendu une histoire Lunii)</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="865"/>
+        <location filename="../pkg/api/device_lunii.py" line="974"/>
+        <location filename="../pkg/api/device_lunii.py" line="1090"/>
         <source>UUID parse error {}</source>
-        <translation type="vanished">Erreur de lecture de l&apos;UUID {}</translation>
+        <translation>Erreur de lecture de l&apos;UUID {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="868"/>
+        <location filename="../pkg/api/device_lunii.py" line="977"/>
+        <location filename="../pkg/api/device_lunii.py" line="1093"/>
         <source>UUID directory is missing in archive !</source>
-        <translation type="vanished">L&apos;archive ne contient pas le dossier UUID !</translation>
+        <translation>L&apos;archive ne contient pas le dossier UUID !</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="819"/>
+        <location filename="../pkg/api/device_lunii.py" line="929"/>
+        <location filename="../pkg/api/device_lunii.py" line="1037"/>
+        <location filename="../pkg/api/device_lunii.py" line="1130"/>
+        <location filename="../pkg/api/device_lunii.py" line="1245"/>
+        <location filename="../pkg/api/device_lunii.py" line="1379"/>
         <source>File {}/{} &gt; {}</source>
-        <translation type="vanished">Fichier {}/{} &gt; {}</translation>
+        <translation>Fichier {}/{} &gt; {}</translation>
     </message>
     <message>
         <source>unsupported story format</source>
         <translation type="vanished">Format d&apos;histoire non supporté</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1153"/>
+        <location filename="../pkg/api/device_lunii.py" line="1294"/>
         <source>plain.pk format detected ! Unable to add this story.</source>
-        <translation type="vanished">Format plain.pk détecté, au lieu de STUdio ! Impossible de charger cette histoire.</translation>
+        <translation>Format plain.pk détecté, au lieu de STUdio ! Impossible de charger cette histoire.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1156"/>
+        <location filename="../pkg/api/device_lunii.py" line="1297"/>
         <source>missing &apos;story.json&apos;. Unable to add this story.</source>
-        <translation type="vanished">Fichier &apos;story.json&apos; manquant. Impossible de charger cette histoire.</translation>
+        <translation>Fichier &apos;story.json&apos; manquant. Impossible de charger cette histoire.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1168"/>
+        <location filename="../pkg/api/device_lunii.py" line="1219"/>
+        <location filename="../pkg/api/device_lunii.py" line="1309"/>
+        <location filename="../pkg/api/device_lunii.py" line="1359"/>
         <source>STUdio story with non MP3 audio file. You need FFMPEG tool to import such kind of story, refer to README.md</source>
-        <translation type="vanished">Histoire STUdio avec des audio non MP3. L&apos;outil FFMPEG est nécessaire pour ce type d&apos;histoire, consulter README.md</translation>
+        <translation>Histoire STUdio avec des audio non MP3. L&apos;outil FFMPEG est nécessaire pour ce type d&apos;histoire, consulter README.md</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1222"/>
+        <location filename="../pkg/api/device_lunii.py" line="1362"/>
         <source>⌛ Transcoding audio {} : {} KB ...</source>
-        <translation type="vanished">⌛ Transcodage audio {} : {} Ko ...</translation>
+        <translation>⌛ Transcodage audio {} : {} Ko ...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1230"/>
         <source>⌛ Removing tags from audio {}</source>
-        <translation type="vanished">⌛ Suppression des tags de l&apos;audio {}</translation>
+        <translation>⌛ Suppression des tags de l&apos;audio {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1269"/>
+        <location filename="../pkg/api/device_lunii.py" line="1403"/>
         <source>Night mode file creation...</source>
-        <translation type="vanished">Création du fichier Mode Nuit...</translation>
+        <translation>Création du fichier Mode Nuit...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1599"/>
+        <location filename="../pkg/api/device_lunii.py" line="1643"/>
         <source>at least {} match your pattern. Try a longer UUID.</source>
-        <translation type="vanished">au moins {} correspondances trouvées. Essayez avec un bout d&apos;UUID plus long.</translation>
+        <translation>au moins {} correspondances trouvées. Essayez avec un bout d&apos;UUID plus long.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1484"/>
+        <location filename="../pkg/api/device_lunii.py" line="1528"/>
         <source>🚧 Exporting {} - {}</source>
-        <translation type="vanished">🚧 Export de {} - {}</translation>
+        <translation>🚧 Export de {} - {}</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1536"/>
         <source>Lunii v3 requires Device Key for genuine story export.</source>
-        <translation type="vanished">Une Lunii v3 nécessite des clés de l&apos;appareil pour exporter une histoire.</translation>
+        <translation>Une Lunii v3 nécessite des clés de l&apos;appareil pour exporter une histoire.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1508"/>
+        <location filename="../pkg/api/device_lunii.py" line="1558"/>
         <source>&gt; Zipping story ...</source>
-        <translation type="vanished">&gt; Compression de l&apos;histoire ...</translation>
+        <translation>&gt; Compression de l&apos;histoire ...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1060"/>
         <source>Lunii v3 personnal backup can&apos;t be imported on this device (SNU mismatch).</source>
-        <translation type="vanished">Cette sauvegarde personnelle Lunii v3 ne peut être importée (le SNU ne correspond pas).</translation>
+        <translation>Cette sauvegarde personnelle Lunii v3 ne peut être importée (le SNU ne correspond pas).</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1064"/>
         <source>Restoring Lunii v3 personnal backup...</source>
-        <translation type="vanished">Restauration d&apos;une sauvegarde personnelle Lunii v3...</translation>
+        <translation>Restauration d&apos;une sauvegarde personnelle Lunii v3...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1574"/>
         <source>&gt; Adding UUID ...</source>
-        <translation type="vanished">&gt; Ajout de l&apos;UUID ...</translation>
+        <translation>&gt; Ajout de l&apos;UUID ...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1579"/>
         <source>&gt; Adding thumbnail ...</source>
-        <translation type="vanished">&gt; Ajout de la vignette ...</translation>
+        <translation>&gt; Ajout de la vignette ...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1584"/>
         <source>&gt; Adding metadata ...</source>
-        <translation type="vanished">&gt; Ajout des metadata ...</translation>
+        <translation>&gt; Ajout des metadata ...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1519"/>
+        <location filename="../pkg/api/device_lunii.py" line="1590"/>
         <source>failed to create ZIP - {}</source>
-        <translation type="vanished">Erreur pendant la création du ZIP - {}</translation>
+        <translation>Erreur pendant la création du ZIP - {}</translation>
     </message>
     <message>
         <source>Lunii v3 personnal backup can&apos;t be imported.</source>
         <translation type="vanished">Une sauvegarde Lunii v3 ne peut être importée.</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1616"/>
         <source>Story directory not found ({})</source>
-        <translation type="vanished">Dossier de l&apos;histoire introuvable ({})</translation>
+        <translation>Dossier de l&apos;histoire introuvable ({})</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1647"/>
         <source>🚧 Removing {} - {}...</source>
-        <translation type="vanished">🚧 Suppresion {} - {}...</translation>
+        <translation>🚧 Suppresion {} - {}...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1685"/>
         <source>Found duplicate story, cleaning...</source>
-        <translation type="vanished">Histoire dupliquée identifiée, nettoyage...</translation>
+        <translation>Histoire dupliquée identifiée, nettoyage...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1696"/>
         <source>Read {} {}stories</source>
-        <translation type="vanished">{} histoires lues</translation>
+        <translation>{} histoires lues</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1710"/>
         <source>Reading Lunii loaded stories...</source>
-        <translation type="vanished">Lecture des histoires chargées dans la Lunii...</translation>
+        <translation>Lecture des histoires chargées dans la Lunii...</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1735"/>
         <source>Config file not found, using default values</source>
-        <translation type="vanished">Fichier de configuration manquant, utilisation des valeurs par défaut</translation>
+        <translation>Fichier de configuration manquant, utilisation des valeurs par défaut</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1741"/>
         <source>🛑 Unsupported config version {}, using default values</source>
-        <translation type="vanished">🛑 Version du fichier de configuration non supporté {}, utilisation des valeurs par défaut</translation>
+        <translation>🛑 Version du fichier de configuration non supporté {}, utilisation des valeurs par défaut</translation>
     </message>
     <message>
+        <location filename="../pkg/api/device_lunii.py" line="1744"/>
         <source>Reading Lunii config...</source>
-        <translation type="vanished">Lecture de la configuration de la Lunii...</translation>
+        <translation>Lecture de la configuration de la Lunii...</translation>
     </message>
 </context>
 <context>
